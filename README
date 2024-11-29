@@ -1,3 +1,9 @@
+# Nethunter Kernel for LineageOS 20 starlte (Samsung Galaxy S9 Exynos9810)
+
+Documentation and feature can be found in nh_files folder.
+
+## Default Linux Kernel README
+
         Linux kernel release 4.x <http://kernel.org/>
 
 These are the release notes for Linux version 4.  Read them carefully,

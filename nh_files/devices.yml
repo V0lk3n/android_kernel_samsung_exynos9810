@@ -1,0 +1,21 @@
+- starlte:
+    model  : Samsung Galaxy S9
+    images :
+      - id     : starlte-los
+        name   : Samsung Galaxy S9 (LineageOS 20)
+        android: thirteen
+    kernels:
+      - id          : starlte-los
+        description : Samsung Galaxy S9 for LineageOS
+        kernelstring: NetHunter Kernel for the Samsung Galaxy S9 starlte (Exynos9810)
+        devicenames : samsung_exynos9810 starlte SM-G960F exynos9810 Galaxy S9 starlte-los
+        arch        : arm64
+        block       : /dev/block/by-name/BOOT
+        version     : 1.0
+        versions    :
+          - android    : thirteen
+            linux      : 4.9
+            description: LineageOS 20
+            author     : v0lk3n
+            source     : 'git clone https://github.com/v0lk3n/android_kernel_samsung_exynos9810.git -b nethunter-lineage-20'
+            features   : [BT_RFCOMM, Internal_BT, Injection, ATH9K_HTC, RTL88XXAU, NFS, CAN]
