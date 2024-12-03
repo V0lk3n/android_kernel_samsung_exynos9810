@@ -247,27 +247,32 @@ void rtw_txpwr_init_regd(struct rf_ctl_t *rfctl)
 	case TXPWR_LMT_CHILE:
 		if (regd == TXPWR_LMT_IC || regd == TXPWR_LMT_CHILE)
 			regd = TXPWR_LMT_FCC;
+
 		else if (regd == TXPWR_LMT_KCC || regd == TXPWR_LMT_ACMA)
 			regd = TXPWR_LMT_ETSI;
 		ent = _rtw_txpwr_lmt_get_by_name(rfctl, regd_str(regd));
+
 		if (ent)
 			rfctl->regd_name = ent->regd_name;
 		RTW_PRINT("alternate regd_name:%s %s\n"
 			, regd_str(regd)
 			, rfctl->regd_name ? "is used" : "not found"
+			/* fallthrough */
 		);
+
 		if (rfctl->regd_name)
-			break;
-		__attribute__ ((__fallthrough__));
-	default:
-		rfctl->regd_name = regd_str(TXPWR_LMT_WW);
-		RTW_PRINT("assign %s for default case\n", regd_str(TXPWR_LMT_WW));
-		break;
-	};
+			/* fallthrough */
+
+		default:
+			rfctl->regd_name = regd_str(TXPWR_LMT_WW);
+			RTW_PRINT("assign %s for default case\n", regd_str(TXPWR_LMT_WW));
+			/* fallthrough */
+		}
 
 release_lock:
 	_exit_critical_mutex(&rfctl->txpwr_lmt_mutex, &irqL);
 }
+
 #endif /* CONFIG_TXPWR_LIMIT */
 
 void rtw_rfctl_init(_adapter *adapter)
@@ -1343,12 +1348,9 @@ void mgt_dispatcher(_adapter *padapter, union recv_frame *precv_frame)
 			ptable->func = &OnAuth;
 		else
 			ptable->func = &OnAuthClient;
-#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 4, 0)
-	__attribute__ ((fallthrough));
-#else
-			__attribute__ ((__fallthrough__));
-#endif
 	case WIFI_ASSOCREQ:
+		break;
+	
 	case WIFI_REASSOCREQ:
 		_mgt_dispatcher(padapter, ptable, precv_frame);
 		#ifdef CONFIG_HOSTAPD_MLME
@@ -1356,6 +1358,7 @@ void mgt_dispatcher(_adapter *padapter, union recv_frame *precv_frame)
 			rtw_hostapd_mlme_rx(padapter, precv_frame);
 		#endif
 		break;
+
 	case WIFI_PROBEREQ:
 		_mgt_dispatcher(padapter, ptable, precv_frame);
 		#ifdef CONFIG_HOSTAPD_MLME
@@ -1363,12 +1366,15 @@ void mgt_dispatcher(_adapter *padapter, union recv_frame *precv_frame)
 			rtw_hostapd_mlme_rx(padapter, precv_frame);
 		#endif
 		break;
+
 	case WIFI_BEACON:
 		_mgt_dispatcher(padapter, ptable, precv_frame);
 		break;
+
 	case WIFI_ACTION:
 		_mgt_dispatcher(padapter, ptable, precv_frame);
 		break;
+
 	default:
 		_mgt_dispatcher(padapter, ptable, precv_frame);
 		#ifdef CONFIG_HOSTAPD_MLME
@@ -1376,6 +1382,7 @@ void mgt_dispatcher(_adapter *padapter, union recv_frame *precv_frame)
 			rtw_hostapd_mlme_rx(padapter, precv_frame);
 		#endif
 		break;
+
 	}
 #else
 
@@ -1976,6 +1983,12 @@ unsigned int OnBeacon(_adapter *padapter, union recv_frame *precv_frame)
 
 #if 0 /* move to validate_recv_mgnt_frame */
 				psta->sta_stats.rx_mgnt_pkts++;
+#endif
+
+#if defined(CONFIG_IOCTL_CFG80211)
+				rtw_cfg80211_cqm_rssi_update(
+					padapter,
+					pmlmepriv->cur_network_scanned->network.Rssi);
 #endif
 			}
 
@@ -13947,13 +13960,13 @@ u8 createbss_hdl(_adapter *padapter, u8 *pbuf)
 		flush_all_cam_entry(padapter);
 
 		pdev_network->Length = get_WLAN_BSSID_EX_sz(pdev_network);
-		_rtw_memcpy(pnetwork, pdev_network, FIELD_OFFSET(WLAN_BSSID_EX, IELength));
-		pnetwork->IELength = pdev_network->IELength;
-
-		if (pnetwork->IELength > MAX_IE_SZ) {
+		if (FIELD_OFFSET(WLAN_BSSID_EX, IELength) > MAX_IE_SZ) {
 			ret = H2C_PARAMETERS_ERROR;
 			goto ibss_post_hdl;
 		}
+
+		memcpy(pnetwork, pdev_network, FIELD_OFFSET(WLAN_BSSID_EX, IELength));
+		pnetwork->IELength = pdev_network->IELength;
 
 		_rtw_memcpy(pnetwork->IEs, pdev_network->IEs, pnetwork->IELength);
 		start_create_ibss(padapter);

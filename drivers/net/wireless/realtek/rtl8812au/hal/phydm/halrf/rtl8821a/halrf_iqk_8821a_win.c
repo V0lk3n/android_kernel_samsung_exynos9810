@@ -273,7 +273,7 @@ void _iqk_tx_8821a(
 
 			odm_write_4byte(dm, 0xc80, 0x18008c10);/* TX_Tone_idx[9:0], TxK_Mask[29] TX_Tone = 16 */
 			odm_write_4byte(dm, 0xc84, 0x38008c10);/* RX_Tone_idx[9:0], RxK_Mask[29] */
-			odm_write_4byte(dm, 0xcb8, 0x00100000);/* cb8[20] ï¿½N SI/PI ï¿½Ï¥ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½ iqk_dpk module */
+			odm_write_4byte(dm, 0xcb8, 0x00100000);/* cb8[20] ±N SI/PI ¨Ï¥ÎÅv¤Áµ¹ iqk_dpk module */
 			odm_write_4byte(dm, 0x980, 0xfa000000);
 			odm_write_4byte(dm, 0x980, 0xf8000000);
 
@@ -358,7 +358,7 @@ void _iqk_tx_8821a(
 					}
 					break;
 					}
-					odm_write_4byte(dm, 0xcb8, 0x00100000);/* cb8[20] ï¿½N SI/PI ï¿½Ï¥ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½ iqk_dpk module */
+					odm_write_4byte(dm, 0xcb8, 0x00100000);/* cb8[20] ±N SI/PI ¨Ï¥ÎÅv¤Áµ¹ iqk_dpk module */
 					cal_retry = 0;
 					while (1) {
 						/* one shot */
@@ -412,7 +412,7 @@ void _iqk_tx_8821a(
 			} else {
 				odm_write_4byte(dm, 0xc80, 0x18008c10);/* TX_Tone_idx[9:0], TxK_Mask[29] TX_Tone = 16 */
 				odm_write_4byte(dm, 0xc84, 0x38008c10);/* RX_Tone_idx[9:0], RxK_Mask[29] */
-				odm_write_4byte(dm, 0xcb8, 0x00100000);/* cb8[20] ï¿½N SI/PI ï¿½Ï¥ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½ iqk_dpk module */
+				odm_write_4byte(dm, 0xcb8, 0x00100000);/* cb8[20] ±N SI/PI ¨Ï¥ÎÅv¤Áµ¹ iqk_dpk module */
 				cal_retry = 0;
 				while (1) {
 					/* one shot */
@@ -499,7 +499,7 @@ void _iqk_tx_8821a(
 				else
 					odm_write_4byte(dm, 0xc8c, 0x28160d00);
 
-				odm_write_4byte(dm, 0xcb8, 0x00100000);/* cb8[20] ï¿½N SI/PI ï¿½Ï¥ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½ iqk_dpk module */
+				odm_write_4byte(dm, 0xcb8, 0x00100000);/* cb8[20] ±N SI/PI ¨Ï¥ÎÅv¤Áµ¹ iqk_dpk module */
 
 				cal_retry = 0;
 				while (1) {

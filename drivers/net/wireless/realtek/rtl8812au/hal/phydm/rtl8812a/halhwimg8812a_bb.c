@@ -110,15 +110,6 @@ check_positive(
 	} else
 		return false;
 }
-static boolean
-check_negative(
-	struct dm_struct *dm,
-	const u32	condition1,
-	const u32	condition2
-)
-{
-	return true;
-}
 
 /******************************************************************************
 *                           agc_tab.TXT
@@ -1065,14 +1056,6 @@ odm_read_and_config_mp_8812a_phy_reg_pg(struct dm_struct *dm)
 	u32	array_len = sizeof(array_mp_8812a_phy_reg_pg) / sizeof(u32);
 	u32	*array = array_mp_8812a_phy_reg_pg;
 
-#if (DM_ODM_SUPPORT_TYPE == ODM_WIN)
-	void	*adapter = dm->adapter;
-	HAL_DATA_TYPE	*hal_data = GET_HAL_DATA(((PADAPTER)adapter));
-
-	PlatformZeroMemory(hal_data->BufOfLinesPwrByRate, MAX_LINES_HWCONFIG_TXT * MAX_BYTES_LINE_HWCONFIG_TXT);
-	hal_data->nLinesReadPwrByRate = array_len / 6;
-#endif
-
 	PHYDM_DBG(dm, ODM_COMP_INIT, "===> %s\n", __func__);
 
 	dm->phy_reg_pg_version = 1;
@@ -1088,14 +1071,8 @@ odm_read_and_config_mp_8812a_phy_reg_pg(struct dm_struct *dm)
 
 		odm_config_bb_phy_reg_pg_8812a(dm, v1, v2, v3, v4, v5, v6);
 
-#if (DM_ODM_SUPPORT_TYPE == ODM_WIN)
-	rsprintf((char *)hal_data->BufOfLinesPwrByRate[i / 6], 100, "%s, %s, %s, 0x%X, 0x%08X, 0x%08X,",
-		(v1 == 0 ? "2.4G" : "  5G"), (v2 == 0 ? "A" : "B"), (v3 == 0 ? "1Tx" : "2Tx"), v4, v5, v6);
-#endif
 	}
 }
-
-
 
 /******************************************************************************
 *                           phy_reg_pg_asus.TXT
@@ -1157,14 +1134,6 @@ odm_read_and_config_mp_8812a_phy_reg_pg_asus(struct dm_struct *dm)
 	u32	array_len = sizeof(array_mp_8812a_phy_reg_pg_asus) / sizeof(u32);
 	u32	*array = array_mp_8812a_phy_reg_pg_asus;
 
-#if (DM_ODM_SUPPORT_TYPE == ODM_WIN)
-	void	*adapter = dm->adapter;
-	HAL_DATA_TYPE	*hal_data = GET_HAL_DATA(((PADAPTER)adapter));
-
-	PlatformZeroMemory(hal_data->BufOfLinesPwrByRate, MAX_LINES_HWCONFIG_TXT * MAX_BYTES_LINE_HWCONFIG_TXT);
-	hal_data->nLinesReadPwrByRate = array_len / 6;
-#endif
-
 	PHYDM_DBG(dm, ODM_COMP_INIT, "===> %s\n", __func__);
 
 	dm->phy_reg_pg_version = 1;
@@ -1180,14 +1149,8 @@ odm_read_and_config_mp_8812a_phy_reg_pg_asus(struct dm_struct *dm)
 
 		odm_config_bb_phy_reg_pg_8812a(dm, v1, v2, v3, v4, v5, v6);
 
-#if (DM_ODM_SUPPORT_TYPE == ODM_WIN)
-	rsprintf((char *)hal_data->BufOfLinesPwrByRate[i / 6], 100, "%s, %s, %s, 0x%X, 0x%08X, 0x%08X,",
-		(v1 == 0 ? "2.4G" : "  5G"), (v2 == 0 ? "A" : "B"), (v3 == 0 ? "1Tx" : "2Tx"), v4, v5, v6);
-#endif
 	}
 }
-
-
 
 /******************************************************************************
 *                           phy_reg_pg_dni.TXT
@@ -1249,14 +1212,6 @@ odm_read_and_config_mp_8812a_phy_reg_pg_dni(struct dm_struct *dm)
 	u32	array_len = sizeof(array_mp_8812a_phy_reg_pg_dni) / sizeof(u32);
 	u32	*array = array_mp_8812a_phy_reg_pg_dni;
 
-#if (DM_ODM_SUPPORT_TYPE == ODM_WIN)
-	void	*adapter = dm->adapter;
-	HAL_DATA_TYPE	*hal_data = GET_HAL_DATA(((PADAPTER)adapter));
-
-	PlatformZeroMemory(hal_data->BufOfLinesPwrByRate, MAX_LINES_HWCONFIG_TXT * MAX_BYTES_LINE_HWCONFIG_TXT);
-	hal_data->nLinesReadPwrByRate = array_len / 6;
-#endif
-
 	PHYDM_DBG(dm, ODM_COMP_INIT, "===> %s\n", __func__);
 
 	dm->phy_reg_pg_version = 1;
@@ -1272,14 +1227,8 @@ odm_read_and_config_mp_8812a_phy_reg_pg_dni(struct dm_struct *dm)
 
 		odm_config_bb_phy_reg_pg_8812a(dm, v1, v2, v3, v4, v5, v6);
 
-#if (DM_ODM_SUPPORT_TYPE == ODM_WIN)
-	rsprintf((char *)hal_data->BufOfLinesPwrByRate[i / 6], 100, "%s, %s, %s, 0x%X, 0x%08X, 0x%08X,",
-		(v1 == 0 ? "2.4G" : "  5G"), (v2 == 0 ? "A" : "B"), (v3 == 0 ? "1Tx" : "2Tx"), v4, v5, v6);
-#endif
 	}
 }
-
-
 
 /******************************************************************************
 *                           phy_reg_pg_nec.TXT
@@ -1341,14 +1290,6 @@ odm_read_and_config_mp_8812a_phy_reg_pg_nec(struct dm_struct *dm)
 	u32	array_len = sizeof(array_mp_8812a_phy_reg_pg_nec) / sizeof(u32);
 	u32	*array = array_mp_8812a_phy_reg_pg_nec;
 
-#if (DM_ODM_SUPPORT_TYPE == ODM_WIN)
-	void	*adapter = dm->adapter;
-	HAL_DATA_TYPE	*hal_data = GET_HAL_DATA(((PADAPTER)adapter));
-
-	PlatformZeroMemory(hal_data->BufOfLinesPwrByRate, MAX_LINES_HWCONFIG_TXT * MAX_BYTES_LINE_HWCONFIG_TXT);
-	hal_data->nLinesReadPwrByRate = array_len / 6;
-#endif
-
 	PHYDM_DBG(dm, ODM_COMP_INIT, "===> %s\n", __func__);
 
 	dm->phy_reg_pg_version = 1;
@@ -1364,14 +1305,8 @@ odm_read_and_config_mp_8812a_phy_reg_pg_nec(struct dm_struct *dm)
 
 		odm_config_bb_phy_reg_pg_8812a(dm, v1, v2, v3, v4, v5, v6);
 
-#if (DM_ODM_SUPPORT_TYPE == ODM_WIN)
-	rsprintf((char *)hal_data->BufOfLinesPwrByRate[i / 6], 100, "%s, %s, %s, 0x%X, 0x%08X, 0x%08X,",
-		(v1 == 0 ? "2.4G" : "  5G"), (v2 == 0 ? "A" : "B"), (v3 == 0 ? "1Tx" : "2Tx"), v4, v5, v6);
-#endif
 	}
 }
-
-
 
 /******************************************************************************
 *                           phy_reg_pg_tplink.TXT
@@ -1433,14 +1368,6 @@ odm_read_and_config_mp_8812a_phy_reg_pg_tplink(struct dm_struct *dm)
 	u32	array_len = sizeof(array_mp_8812a_phy_reg_pg_tplink) / sizeof(u32);
 	u32	*array = array_mp_8812a_phy_reg_pg_tplink;
 
-#if (DM_ODM_SUPPORT_TYPE == ODM_WIN)
-	void	*adapter = dm->adapter;
-	HAL_DATA_TYPE	*hal_data = GET_HAL_DATA(((PADAPTER)adapter));
-
-	PlatformZeroMemory(hal_data->BufOfLinesPwrByRate, MAX_LINES_HWCONFIG_TXT * MAX_BYTES_LINE_HWCONFIG_TXT);
-	hal_data->nLinesReadPwrByRate = array_len / 6;
-#endif
-
 	PHYDM_DBG(dm, ODM_COMP_INIT, "===> %s\n", __func__);
 
 	dm->phy_reg_pg_version = 1;
@@ -1455,15 +1382,8 @@ odm_read_and_config_mp_8812a_phy_reg_pg_tplink(struct dm_struct *dm)
 		u32	v6 = array[i + 5];
 
 		odm_config_bb_phy_reg_pg_8812a(dm, v1, v2, v3, v4, v5, v6);
-
-#if (DM_ODM_SUPPORT_TYPE == ODM_WIN)
-	rsprintf((char *)hal_data->BufOfLinesPwrByRate[i / 6], 100, "%s, %s, %s, 0x%X, 0x%08X, 0x%08X,",
-		(v1 == 0 ? "2.4G" : "  5G"), (v2 == 0 ? "A" : "B"), (v3 == 0 ? "1Tx" : "2Tx"), v4, v5, v6);
-#endif
 	}
 }
-
-
 
 #endif /* end of HWIMG_SUPPORT*/
 

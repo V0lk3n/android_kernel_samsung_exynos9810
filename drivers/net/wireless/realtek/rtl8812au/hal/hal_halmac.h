@@ -93,7 +93,6 @@ struct rtw_halmac_bcn_ctrl {
 	u8 tsf_update:1;	/* Update TSF when beacon or probe response */
 	u8 enable_bcn:1;	/* Enable beacon related functions */
 	u8 rxbcn_rpt:1;		/* Enable RXBCNOK report */
-	u8 p2p_ctwin:1;		/* Enable P2P CTN WINDOWS function */
 	u8 p2p_bcn_area:1;	/* Enable P2P BCN area on function */
 };
 

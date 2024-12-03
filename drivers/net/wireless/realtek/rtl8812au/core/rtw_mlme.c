@@ -1390,13 +1390,6 @@ void rtw_surveydone_event_callback(_adapter	*adapter, u8 *pbuf)
 						|| _SUCCESS != rtw_sitesurvey_cmd(adapter, &parm)
 					   ) {
 						rtw_set_to_roam(adapter, 0);
-#ifdef CONFIG_INTEL_WIDI
-						if (adapter->mlmepriv.widi_state == INTEL_WIDI_STATE_ROAMING) {
-							_rtw_memset(pmlmepriv->sa_ext, 0x00, L2SDTA_SERVICE_VE_LEN);
-							intel_widi_wk_cmd(adapter, INTEL_WIDI_LISTEN_WK, NULL, 0);
-							RTW_INFO("change to widi listen\n");
-						}
-#endif /* CONFIG_INTEL_WIDI */
 						rtw_free_assoc_resources(adapter, _TRUE);
 						rtw_indicate_disconnect(adapter, 0, _FALSE);
 					} else
@@ -1756,13 +1749,6 @@ void rtw_indicate_connect(_adapter *padapter)
 	}
 
 	rtw_set_to_roam(padapter, 0);
-#ifdef CONFIG_INTEL_WIDI
-	if (padapter->mlmepriv.widi_state == INTEL_WIDI_STATE_ROAMING) {
-		_rtw_memset(pmlmepriv->sa_ext, 0x00, L2SDTA_SERVICE_VE_LEN);
-		intel_widi_wk_cmd(padapter, INTEL_WIDI_LISTEN_WK, NULL, 0);
-		RTW_INFO("change to widi listen\n");
-	}
-#endif /* CONFIG_INTEL_WIDI */
 	if (!MLME_IS_AP(padapter) && !MLME_IS_MESH(padapter))
 		rtw_mi_set_scan_deny(padapter, 3000);
 
@@ -2841,10 +2827,8 @@ void rtw_sta_mstatus_report(_adapter *adapter)
 		psta = rtw_get_stainfo(&adapter->stapriv, tgt_network->network.MacAddress);
 		if (psta)
 			rtw_sta_mstatus_disc_rpt(adapter, psta->cmn.mac_id);
-		else {
+		else
 			RTW_INFO("%s "ADPT_FMT" - mac_addr: "MAC_FMT" psta == NULL\n", __func__, ADPT_ARG(adapter), MAC_ARG(tgt_network->network.MacAddress));
-			rtw_warn_on(1);
-		}
 	}
 }
 
@@ -2920,10 +2904,6 @@ void rtw_stadel_event_callback(_adapter *adapter, u8 *pbuf)
 			roam = _TRUE;
 			roam_target = pmlmepriv->roam_network;
 		}
-#ifdef CONFIG_INTEL_WIDI
-		else if (adapter->mlmepriv.widi_state == INTEL_WIDI_STATE_CONNECTED)
-			roam = _TRUE;
-#endif /* CONFIG_INTEL_WIDI */
 
 		if (roam == _TRUE) {
 			if (rtw_to_roam(adapter) > 0)
@@ -2940,10 +2920,6 @@ void rtw_stadel_event_callback(_adapter *adapter, u8 *pbuf)
 		rtw_free_mlme_priv_ie_data(pmlmepriv);
 
 		rtw_indicate_disconnect(adapter, *(u16 *)pstadel->rsvd, pstadel->locally_generated);
-#ifdef CONFIG_INTEL_WIDI
-		if (!rtw_to_roam(adapter))
-			process_intel_widi_disconnect(adapter, 1);
-#endif /* CONFIG_INTEL_WIDI */
 
 		_rtw_roaming(adapter, roam_target);
 	}
@@ -3065,13 +3041,6 @@ void rtw_join_timeout_handler(void *ctx)
 				}
 				break;
 			} else {
-#ifdef CONFIG_INTEL_WIDI
-				if (adapter->mlmepriv.widi_state == INTEL_WIDI_STATE_ROAMING) {
-					_rtw_memset(pmlmepriv->sa_ext, 0x00, L2SDTA_SERVICE_VE_LEN);
-					intel_widi_wk_cmd(adapter, INTEL_WIDI_LISTEN_WK, NULL, 0);
-					RTW_INFO("change to widi listen\n");
-				}
-#endif /* CONFIG_INTEL_WIDI */
 				RTW_INFO("%s We've try roaming but fail\n", __FUNCTION__);
 #ifdef CONFIG_RTW_80211R
 				rtw_ft_clr_flags(adapter, RTW_FT_PEER_EN|RTW_FT_PEER_OTD_EN);
@@ -3099,12 +3068,9 @@ void rtw_join_timeout_handler(void *ctx)
 
 	_exit_critical_bh(&pmlmepriv->lock, &irqL);
 
-
 #ifdef CONFIG_DRVEXT_MODULE_WSC
 	drvext_assoc_fail_indicate(&adapter->drvextpriv);
 #endif
-
-
 
 }
 
@@ -3193,10 +3159,11 @@ void rtw_drv_scan_by_self(_adapter *padapter, u8 reason)
 		#ifdef CONFIG_LAYER2_ROAMING
 		if (rtw_chk_roam_flags(padapter, RTW_ROAM_ACTIVE) && pmlmepriv->need_to_roam == _TRUE)
 			RTW_INFO(FUNC_ADPT_FMT" need to roam, don't care BusyTraffic\n", FUNC_ADPT_ARG(padapter));
-		else
+	else {
 		#endif
 			RTW_INFO(FUNC_ADPT_FMT" exit BusyTraffic\n", FUNC_ADPT_ARG(padapter));
 			goto exit;
+		}
 	}
 	else if (ssc_chk != SS_ALLOW)
 		goto exit;
@@ -3344,7 +3311,6 @@ void rtw_iface_dynamic_check_timer_handlder(_adapter *adapter)
 
 
 #ifdef CONFIG_BR_EXT
-
 #if (LINUX_VERSION_CODE > KERNEL_VERSION(2, 6, 35))
 	rcu_read_lock();
 #endif /* (LINUX_VERSION_CODE > KERNEL_VERSION(2, 6, 35)) */
@@ -3824,7 +3790,6 @@ The caller must hold the following spinlock
 
 pmlmepriv->lock
 
-
 */
 
 int rtw_select_and_join_from_scanned_queue(struct mlme_priv *pmlmepriv)
@@ -3964,14 +3929,12 @@ sint rtw_set_auth(_adapter *adapter, struct security_priv *psecuritypriv)
 	pcmd->rsp = NULL;
 	pcmd->rspsz = 0;
 
-
 	_rtw_init_listhead(&pcmd->list);
 
 
 	res = rtw_enqueue_cmd(pcmdpriv, pcmd);
 
 exit:
-
 
 	return res;
 
@@ -4234,7 +4197,6 @@ int rtw_restruct_wmm_ie(_adapter *adapter, u8 *in_ie, u8 *out_ie, uint in_len, u
 
 }
 
-
 /*
  * Ported from 8185: IsInPreAuthKeyList(). (Renamed from SecIsInPreAuthKeyList(), 2006-10-13.)
  * Added by Annie, 2006-05-07.
@@ -4395,7 +4357,6 @@ void rtw_init_registrypriv_dev_network(_adapter *adapter)
 	WLAN_BSSID_EX    *pdev_network = &pregistrypriv->dev_network;
 	u8 *myhwaddr = adapter_mac_addr(adapter);
 
-
 	_rtw_memcpy(pdev_network->MacAddress, myhwaddr, ETH_ALEN);
 
 	_rtw_memcpy(&pdev_network->Ssid, &pregistrypriv->ssid, sizeof(NDIS_802_11_SSID));
@@ -4406,8 +4367,6 @@ void rtw_init_registrypriv_dev_network(_adapter *adapter)
 	pdev_network->Configuration.FHConfig.HopPattern = 0;
 	pdev_network->Configuration.FHConfig.HopSet = 0;
 	pdev_network->Configuration.FHConfig.DwellTime = 0;
-
-
 
 }
 
@@ -4488,13 +4447,10 @@ void rtw_update_registrypriv_dev_network(_adapter *adapter)
 	/* notes: translate IELength & Length after assign the Length to cmdsz in createbss_cmd(); */
 	/* pdev_network->IELength = cpu_to_le32(sz); */
 
-
 }
 
 void rtw_get_encrypt_decrypt_from_registrypriv(_adapter *adapter)
 {
-
-
 
 }
 
@@ -4514,7 +4470,7 @@ void rtw_joinbss_reset(_adapter *padapter)
 
 	phtpriv->ampdu_enable = _FALSE;/* reset to disabled */
 
-#if defined(CONFIG_USB_HCI) || defined(CONFIG_SDIO_HCI)
+#if defined(CONFIG_USB_HCI)
 	/* TH=1 => means that invalidate usb rx aggregation */
 	/* TH=0 => means that validate usb rx aggregation, use init value. */
 	if (phtpriv->ht_option) {
@@ -4527,8 +4483,7 @@ void rtw_joinbss_reset(_adapter *padapter)
 		threshold = 1;
 		rtw_hal_set_hwreg(padapter, HW_VAR_RXDMA_AGG_PG_TH, (u8 *)(&threshold));
 	}
-#endif/* #if defined( CONFIG_USB_HCI) || defined (CONFIG_SDIO_HCI) */
-
+#endif/* #if defined( CONFIG_USB_HCI) */
 #endif/* #ifdef CONFIG_80211N_HT */
 
 }

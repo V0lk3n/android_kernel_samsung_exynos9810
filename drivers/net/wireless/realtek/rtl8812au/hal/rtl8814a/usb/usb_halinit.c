@@ -24,18 +24,6 @@
 #endif
 
 
-static void _dbg_dump_macreg(_adapter *padapter)
-{
-	u32 offset = 0;
-	u32 val32 = 0;
-	u32 index = 0 ;
-	for (index = 0; index < 64; index++) {
-		offset = index * 4;
-		val32 = rtw_read32(padapter, offset);
-		RTW_INFO("offset : 0x%02x ,val:0x%08x\n", offset, val32);
-	}
-}
-
 static VOID
 _ConfigChipOutEP_8814(
 	IN	PADAPTER	pAdapter,
@@ -872,11 +860,11 @@ init_UsbAggregationSetting_8814A(
  *	12/10/2010	MHC		Create Version 0.  
  *
  *---------------------------------------------------------------------------*/
-static VOID
-USB_AggModeSwitch(
-	IN	PADAPTER			Adapter
-	)
-{
+//static VOID
+//USB_AggModeSwitch(
+//	IN	PADAPTER			Adapter
+//	)
+//{
 #if 0
 	HAL_DATA_TYPE	*pHalData = GET_HAL_DATA(Adapter);
 	PMGNT_INFO		pMgntInfo = &(Adapter->MgntInfo);
@@ -959,13 +947,13 @@ USB_AggModeSwitch(
 	
 #endif
 #endif
-}	// USB_AggModeSwitch
+//}	// USB_AggModeSwitch
 
-static VOID
-_InitOperationMode_8814A(
-	IN	PADAPTER			Adapter
-	)
-{
+//static VOID
+//_InitOperationMode_8814A(
+//	IN	PADAPTER			Adapter
+//	)
+//{
 #if 0//gtest
 	PHAL_DATA_TYPE	pHalData = GET_HAL_DATA(Adapter);
 	u8				regBwOpMode = 0;
@@ -1028,7 +1016,7 @@ _InitOperationMode_8814A(
 	//rtw_write32(Adapter, REG_INIRTS_RATE_SEL, regRRSR);
 	rtw_write8(Adapter, REG_BWOPMODE, regBwOpMode);
 #endif
-}
+//}
 
 /*
 // Set CCK and OFDM Block "ON"
@@ -1113,11 +1101,11 @@ _InitAntenna_Selection_8814A(IN	PADAPTER Adapter)
 // If Efuse 0x0e bit1 is not enabled, we can not support selective suspend for Minicard and
 // slim card.
 //
-static VOID
-HalDetectSelectiveSuspendMode(
-	IN PADAPTER				Adapter
-	)
-{
+//static VOID
+//HalDetectSelectiveSuspendMode(
+//	IN PADAPTER				Adapter
+//	)
+//{
 #if 0
 	u8	tmpvalue;
 	HAL_DATA_TYPE	*pHalData = GET_HAL_DATA(Adapter);
@@ -1151,24 +1139,27 @@ HalDetectSelectiveSuspendMode(
 		//}
 	}
 #endif
-}	// HalDetectSelectiveSuspendMode
+//}	// HalDetectSelectiveSuspendMode
 
-static rt_rf_power_state RfOnOffDetect(IN	PADAPTER pAdapter )
-{
-	rt_rf_power_state rfpowerstate = rf_on;
 
-	return rfpowerstate;
-}	// HalDetectPwrDownMode
+//static rt_rf_power_state RfOnOffDetect(IN	PADAPTER pAdapter )
+//{
+//	rt_rf_power_state rfpowerstate = rf_on;
+
+//	return rfpowerstate;
+//}	// HalDetectPwrDownMode
 
 static void _ps_open_RF(_adapter *padapter) {
 	//here call with bRegSSPwrLvl 1, bRegSSPwrLvl 2 needs to be verified
 	//phy_SsPwrSwitch92CU(padapter, rf_on, 1);
 }
 
+/*
 static void _ps_close_RF(_adapter *padapter){
 	//here call with bRegSSPwrLvl 1, bRegSSPwrLvl 2 needs to be verified
 	//phy_SsPwrSwitch92CU(padapter, rf_off, 1);
 }
+*/
 
 
 /*	A lightweight deinit function	*/

@@ -1552,12 +1552,12 @@ _compute_loop_back_gain_path_a(
 )
 {
 	/* compute loopback gain */
-	/* ï¿½pï¿½ï¿½tmp_lb_gain ï¿½Î¨ìªºfunction hex2dec() ï¿½Oï¿½N twos complementï¿½ï¿½ï¿½Qï¿½ï¿½ï¿½iï¿½ï¿½ï¿½à¦¨ï¿½Qï¿½iï¿½ï¿½, ï¿½Qï¿½ï¿½ï¿½iï¿½ìªºï¿½æ¦¡ï¿½ï¿½s11.10
-	* ï¿½|ï¿½ï¿½1, d00[10:0] = h'3ff, ï¿½gï¿½L hex2dec(h'3ff) = 1023,
-	* ï¿½|ï¿½ï¿½2, d00[10:0] = h'400, ï¿½gï¿½L hex2dec(h'400) = -1024,
-	* ï¿½|ï¿½ï¿½3, d00[10:0] = h'0A9, ï¿½gï¿½L hex2dec(h'0A9) = 169,
-	* ï¿½|ï¿½ï¿½4, d00[10:0] = h'54c, ï¿½gï¿½L hex2dec(h'54c) = -692,
-	* ï¿½|ï¿½ï¿½5, d00[10:0] = h'7ff, ï¿½gï¿½L hex2dec(h'7ff) = -1, */
+	/* ­pºâtmp_lb_gain ¥Î¨ìªºfunction hex2dec() ¬O±N twos complementªº¤Q¤»¶i¦ìÂà¦¨¤Q¶i¦ì, ¤Q¤»¶i¦ìªº®æ¦¡¬°s11.10
+	* Á|¨Ò1, d00[10:0] = h'3ff, ¸g¹L hex2dec(h'3ff) = 1023,
+	* Á|¨Ò2, d00[10:0] = h'400, ¸g¹L hex2dec(h'400) = -1024,
+	* Á|¨Ò3, d00[10:0] = h'0A9, ¸g¹L hex2dec(h'0A9) = 169,
+	* Á|¨Ò4, d00[10:0] = h'54c, ¸g¹L hex2dec(h'54c) = -692,
+	* Á|¨Ò5, d00[10:0] = h'7ff, ¸g¹L hex2dec(h'7ff) = -1, */
 	u32 reg0xd00_26_16 = odm_get_bb_reg(dm, R_0xd00, 0x7FF0000);
 	u32 reg0xd00_10_0  = odm_get_bb_reg(dm, R_0xd00, 0x7FF);
 
@@ -1587,16 +1587,16 @@ _fine_tune_loop_back_gain_path_a(
 		/* RF setting */
 		odm_set_rf_reg(dm, RF_PATH_A, RF_0x00, RFREGOFFSETMASK, dpk_tx_agc);
 		odm_write_4byte(dm, 0x82c, 0x802083dd);
-		/* ï¿½`ï¿½Npage c1ï¿½ï¿½c90ï¿½bDPKï¿½Lï¿½{ï¿½ï¿½ï¿½dï¿½Uï¿½ï¿½ï¿½ï¿½Qï¿½ï¿½Lthread or processï¿½ï¿½gï¿½ï¿½page cï¿½ï¿½c90ï¿½ï¿½ */
+		/* ª`·Npage c1ªºc90¦bDPK¹Lµ{¤¤¤d¸U¤£¯à³Q¨ä¥Lthread or process§ï¼g¦¨page cªºc90­È */
 		odm_write_4byte(dm, 0xc90, 0x0101f018);
 
 		/* one shot */
 		odm_write_4byte(dm, 0xcc8, 0x800c5599);
 		odm_write_4byte(dm, 0xcc8, 0x000c5599);
-		/* delay 50 ms,ï¿½ï¿½ delay ï¿½É¶ï¿½ï¿½ï¿½ï¿½@ï¿½I, ï¿½Tï¿½w PA Scan function ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+		/* delay 50 ms,Åý delay ®É¶¡ªø¤@ÂI, ½T©w PA Scan function ¦³°µ§¹ */
 		delay_ms(50);
 
-		/* reg82c[31] = 0 --> ï¿½ï¿½ï¿½ï¿½ page C */
+		/* reg82c[31] = 0 --> ¤Á¨ì page C */
 		odm_write_4byte(dm, 0x82c, 0x002083dd);
 		odm_set_rf_reg(dm, RF_PATH_A, RF_0x00, RFREGOFFSETMASK, 0x33d8d);
 
@@ -1642,7 +1642,7 @@ _dpk_init_path_a(
 	/* TX pause */
 	odm_write_1byte(dm, 0x522, 0x7f);
 
-	/* reg82c[31] = b'0, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ page C */
+	/* reg82c[31] = b'0, ¤Á´«¨ì page C */
 	odm_write_4byte(dm, 0x82c, 0x002083dd);
 
 	/* AFE setting */
@@ -1650,7 +1650,7 @@ _dpk_init_path_a(
 	odm_write_4byte(dm, 0xc60, 0x77777777);
 	odm_write_4byte(dm, 0xc64, 0x77777777);
 
-	/* external TRSW ï¿½ï¿½ï¿½ï¿½ T */
+	/* external TRSW ¤Á¨ì T */
 	odm_write_4byte(dm, 0xcb0, 0x77777777);
 	odm_write_4byte(dm, 0xcb4, 0x01000077);
 
@@ -1666,7 +1666,7 @@ _dpk_init_path_a(
 	/* r_gothrough_iqkdpk */
 	odm_write_4byte(dm, 0xc94, 0x0100005D);
 
-	/* reg82c[31] = 1 --> ï¿½ï¿½ï¿½ï¿½ page C1 */
+	/* reg82c[31] = 1 --> ¤Á¨ì page C1 */
 	odm_write_4byte(dm, 0x82c, 0x802083dd);
 
 	/* IQK Amp off */
@@ -1700,7 +1700,7 @@ _dpk_init_path_a(
 	odm_write_4byte(dm, 0xc78, 0x00bb00be);
 	odm_write_4byte(dm, 0xc7c, 0x00b500b8);
 
-	/* reg82c[31] = b'0, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ page C */
+	/* reg82c[31] = b'0, ¤Á´«¨ì page C */
 	odm_write_4byte(dm, 0x82c, 0x002083dd);
 
 	cali_info->is_dpk_fail = false;
@@ -1727,27 +1727,27 @@ _dpk_adjust_rf_gain_path_a(
 	/* PGA gain: RF reg8f[14:13] */
 	odm_set_rf_reg(dm, RF_PATH_A, RF_0x8f, RFREGOFFSETMASK, 0x8a001);
 
-	/* reg82c[31] = 1 --> ï¿½ï¿½ï¿½ï¿½ page C1 */
+	/* reg82c[31] = 1 --> ¤Á¨ì page C1 */
 	odm_write_4byte(dm, 0x82c, 0x802083dd);
 
 	/* DPK setting */
 	odm_write_4byte(dm, 0xc94, 0xf76c9f84);
 	odm_write_4byte(dm, 0xcc8, 0x000c5599);
 	odm_write_4byte(dm, 0xcc4, 0x11838000);
-	odm_set_bb_reg(dm, R_0xcd4, 0xFFF000, 0x100);  /* ï¿½Ncd4[23:12] ï¿½ï¦¨ h'100, ï¿½ä¥¦ï¿½ì¤¸ï¿½Ð«Oï¿½dï¿½ï¿½È¤ï¿½ï¿½nï¿½gï¿½ï¿½
-     * ï¿½`ï¿½Npage c1ï¿½ï¿½c90ï¿½bDPKï¿½Lï¿½{ï¿½ï¿½ï¿½dï¿½Uï¿½ï¿½ï¿½ï¿½Qï¿½ï¿½Lthread or processï¿½ï¿½gï¿½ï¿½page cï¿½ï¿½c90ï¿½ï¿½ */
+	odm_set_bb_reg(dm, R_0xcd4, 0xFFF000, 0x100);  /* ±Ncd4[23:12] §ï¦¨ h'100, ¨ä¥¦¦ì¤¸½Ð«O¯d­ì­È¤£­n¼g¨ì
+     * ª`·Npage c1ªºc90¦bDPK¹Lµ{¤¤¤d¸U¤£¯à³Q¨ä¥Lthread or process§ï¼g¦¨page cªºc90­È */
 	odm_write_4byte(dm, 0xc90, 0x0101f018);
 
 	/* one shot */
 	odm_write_4byte(dm, 0xcc8, 0x800c5599);
 	odm_write_4byte(dm, 0xcc8, 0x000c5599);
-	/* delay 50 ms,ï¿½ï¿½ delay ï¿½É¶ï¿½ï¿½ï¿½ï¿½@ï¿½I, ï¿½Tï¿½w PA Scan function ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+	/* delay 50 ms,Åý delay ®É¶¡ªø¤@ÂI, ½T©w PA Scan function ¦³°µ§¹ */
 	delay_ms(50);
 
 	/* read back Loopback Gain */
 	odm_write_4byte(dm, 0xcb8, 0x09000000);
 
-	/* reg82c[31] = 0 --> ï¿½ï¿½ï¿½ï¿½ page C */
+	/* reg82c[31] = 0 --> ¤Á¨ì page C */
 	odm_write_4byte(dm, 0x82c, 0x002083dd);
 	odm_set_rf_reg(dm, RF_PATH_A, RF_0x00, RFREGOFFSETMASK, 0x33d8d);
 
@@ -1786,10 +1786,10 @@ _dpk_gain_loss_to_find_tx_agc_path_a(
 	/* RF setting */
 	odm_set_rf_reg(dm, RF_PATH_A, RF_0x00, RFREGOFFSETMASK, 0x50bfc);
 
-	/* reg82c[31] = 1 --> ï¿½ï¿½ï¿½ï¿½ page C1 */
+	/* reg82c[31] = 1 --> ¤Á¨ì page C1 */
 	odm_write_4byte(dm, 0x82c, 0x802083dd);
 
-	/* regc20[15:13] = dB sel, ï¿½iï¿½D Gain Loss function ï¿½hï¿½Mï¿½ï¿½ dB_sel ï¿½Ò³]ï¿½wï¿½ï¿½PA gain lossï¿½Ø¼Ð©Ò¹ï¿½ï¿½ï¿½ï¿½ï¿½ Tx AGC ï¿½ï¿½ï¿½ï¿½. */
+	/* regc20[15:13] = dB sel, §i¶D Gain Loss function ¥h´M§ä dB_sel ©Ò³]©wªºPA gain loss¥Ø¼Ð©Ò¹ïÀ³ªº Tx AGC ¬°¦ó. */
 	/* dB_sel = b'000 ' 1.0 dB PA gain loss */
 	/* dB_sel = b'001 ' 1.5 dB PA gain loss */
 	/* dB_sel = b'010 ' 2.0 dB PA gain loss */
@@ -1804,27 +1804,27 @@ _dpk_gain_loss_to_find_tx_agc_path_a(
 	odm_write_4byte(dm, 0xcc8, 0x000c5599);
 	odm_write_4byte(dm, 0xcc4, 0x148b8000);
 
-	/* ï¿½`ï¿½Npage c1ï¿½ï¿½c90ï¿½bDPKï¿½Lï¿½{ï¿½ï¿½ï¿½dï¿½Uï¿½ï¿½ï¿½ï¿½Qï¿½ï¿½Lthread or processï¿½ï¿½gï¿½ï¿½page cï¿½ï¿½c90ï¿½ï¿½ */
+	/* ª`·Npage c1ªºc90¦bDPK¹Lµ{¤¤¤d¸U¤£¯à³Q¨ä¥Lthread or process§ï¼g¦¨page cªºc90­È */
 	odm_write_4byte(dm, 0xc90, 0x0401f018);
 
 	/* one shot */
 	odm_write_4byte(dm, 0xcc8, 0x800c5599);
 	odm_write_4byte(dm, 0xcc8, 0x000c5599);
-	/* delay 50 ms,ï¿½ï¿½ delay ï¿½É¶ï¿½ï¿½ï¿½ï¿½@ï¿½I, ï¿½Tï¿½w PA Scan function ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+	/* delay 50 ms,Åý delay ®É¶¡ªø¤@ÂI, ½T©w PA Scan function ¦³°µ§¹ */
 	delay_ms(50);
 
 	/* read back Loopback Gain */
-	/* ï¿½iï¿½Hï¿½b d00[3:0] ï¿½ï¿½Åªï¿½^, dB_sel ï¿½ï¿½ï¿½Ò³]ï¿½wï¿½ï¿½ gain loss ï¿½|ï¿½ï¿½ï¿½bï¿½ï¿½ï¿½@ï¿½ï¿½ Tx AGC ï¿½]ï¿½w */
-	/* Åªï¿½^d00[3:0] = h'1 ' Tx AGC = h'13 */
-	/* Åªï¿½^d00[3:0] = h'2 ' Tx AGC = h'14 */
-	/* Åªï¿½^d00[3:0] = h'3 ' Tx AGC = h'15 */
-	/* Åªï¿½^d00[3:0] = h'4 ' Tx AGC = h'16 */
-	/* Åªï¿½^d00[3:0] = h'5 ' Tx AGC = h'17 */
-	/* Åªï¿½^d00[3:0] = h'6 ' Tx AGC = h'18 */
-	/* Åªï¿½^d00[3:0] = h'7 ' Tx AGC = h'19 */
-	/* Åªï¿½^d00[3:0] = h'8 ' Tx AGC = h'1a */
-	/* Åªï¿½^d00[3:0] = h'9 ' Tx AGC = h'1b */
-	/* Åªï¿½^d00[3:0] = h'a ' Tx AGC = h'1c */
+	/* ¥i¥H¦b d00[3:0] ¤¤Åª¦^, dB_sel ¤¤©Ò³]©wªº gain loss ·|¸¨¦b­þ¤@­Ó Tx AGC ³]©w */
+	/* Åª¦^d00[3:0] = h'1 ' Tx AGC = h'13 */
+	/* Åª¦^d00[3:0] = h'2 ' Tx AGC = h'14 */
+	/* Åª¦^d00[3:0] = h'3 ' Tx AGC = h'15 */
+	/* Åª¦^d00[3:0] = h'4 ' Tx AGC = h'16 */
+	/* Åª¦^d00[3:0] = h'5 ' Tx AGC = h'17 */
+	/* Åª¦^d00[3:0] = h'6 ' Tx AGC = h'18 */
+	/* Åª¦^d00[3:0] = h'7 ' Tx AGC = h'19 */
+	/* Åª¦^d00[3:0] = h'8 ' Tx AGC = h'1a */
+	/* Åª¦^d00[3:0] = h'9 ' Tx AGC = h'1b */
+	/* Åª¦^d00[3:0] = h'a ' Tx AGC = h'1c */
 	/*  */
 	reg0xd00 = odm_read_4byte(dm, 0xd00);
 	switch (odm_read_4byte(dm, 0xd00) & (BIT(3) | BIT(2) | BIT(1) | BIT(0))) {
@@ -1862,7 +1862,7 @@ _dpk_gain_loss_to_find_tx_agc_path_a(
 		cali_info->dpk_tx_agc = 0x50bf0 | 0xc;
 		break;
 	}
-	/* reg82c[31] = 0 --> ï¿½ï¿½ï¿½ï¿½ page C */
+	/* reg82c[31] = 0 --> ¤Á¨ì page C */
 	odm_write_4byte(dm, 0x82c, 0x002083dd);
 	odm_set_rf_reg(dm, RF_PATH_A, RF_0x00, RFREGOFFSETMASK, 0x33d8d);
 
@@ -1881,14 +1881,14 @@ _dpk_adjust_rf_gain_by_found_tx_agc_path_a
 
 	RF_DBG(dm, DBG_RF_IQK, "===> _DPK_AdjustRFGainByFoundTxAGC\n");
 
-	/* RF setting, ï¿½ï¿½ï¿½sï¿½]ï¿½wRF reg00, ï¿½|ï¿½Ò¥ï¿½DPK Phase 2ï¿½oï¿½ìªº d00[3:0] = 0x6 ' TX AGC= 0x18 ' RF reg00[4:0] = 0x18 */
+	/* RF setting, ­«·s³]©wRF reg00, Á|¨Ò¥ÎDPK Phase 2±o¨ìªº d00[3:0] = 0x6 ' TX AGC= 0x18 ' RF reg00[4:0] = 0x18 */
 	odm_set_rf_reg(dm, RF_PATH_A, RF_0x00, RFREGOFFSETMASK, cali_info->dpk_tx_agc);
 	/* Attn: A mode @ reg64[2:0], G mode @ reg56 */
 	odm_set_rf_reg(dm, RF_PATH_A, RF_0x64, RFREGOFFSETMASK, 0x19aac);
 	/* PGA gain: RF reg8f[14:13] */
 	odm_set_rf_reg(dm, RF_PATH_A, RF_0x8f, RFREGOFFSETMASK, 0x8a001);
 
-	/* reg82c[31] = 1 --> ï¿½ï¿½ï¿½ï¿½ page C1 */
+	/* reg82c[31] = 1 --> ¤Á¨ì page C1 */
 	odm_write_4byte(dm, 0x82c, 0x802083dd);
 
 	/* DPK setting */
@@ -1896,16 +1896,16 @@ _dpk_adjust_rf_gain_by_found_tx_agc_path_a
 	odm_write_4byte(dm, 0xcc8, 0x000c5599);
 	odm_write_4byte(dm, 0xcc4, 0x11838000);
 
-	/* ï¿½`ï¿½Npage c1ï¿½ï¿½c90ï¿½bDPKï¿½Lï¿½{ï¿½ï¿½ï¿½dï¿½Uï¿½ï¿½ï¿½ï¿½Qï¿½ï¿½Lthread or processï¿½ï¿½gï¿½ï¿½page cï¿½ï¿½c90ï¿½ï¿½ */
+	/* ª`·Npage c1ªºc90¦bDPK¹Lµ{¤¤¤d¸U¤£¯à³Q¨ä¥Lthread or process§ï¼g¦¨page cªºc90­È */
 	odm_write_4byte(dm, 0xc90, 0x0101f018);
 
 	/* one shot */
 	odm_write_4byte(dm, 0xcc8, 0x800c5599);
 	odm_write_4byte(dm, 0xcc8, 0x000c5599);
-	/* delay 50 ms,ï¿½ï¿½ delay ï¿½É¶ï¿½ï¿½ï¿½ï¿½@ï¿½I, ï¿½Tï¿½w PA Scan function ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+	/* delay 50 ms,Åý delay ®É¶¡ªø¤@ÂI, ½T©w PA Scan function ¦³°µ§¹ */
 	delay_ms(50);
 
-	/* reg82c[31] = 0 --> ï¿½ï¿½ï¿½ï¿½ page C */
+	/* reg82c[31] = 0 --> ¤Á¨ì page C */
 	odm_write_4byte(dm, 0x82c, 0x002083dd);
 	odm_set_rf_reg(dm, RF_PATH_A, RF_0x00, RFREGOFFSETMASK, 0x33d8d);
 
@@ -1941,9 +1941,9 @@ _dpk_do_auto_dpk_path_a(
 	RF_DBG(dm, DBG_RF_IQK, "===> _DPK_DoAutoDPK\n");
 
 
-	/* reg82c[31] = 0 --> ï¿½ï¿½ï¿½ï¿½ page C */
+	/* reg82c[31] = 0 --> ¤Á¨ì page C */
 	odm_write_4byte(dm, 0x82c, 0x002083dd);
-	/* RF setting, ï¿½ï¿½ï¿½BRF reg00, ï¿½P DPK Phase 3 ï¿½@ï¿½P */
+	/* RF setting, ¦¹³BRF reg00, »P DPK Phase 3 ¤@­P */
 	odm_set_rf_reg(dm, RF_PATH_A, RF_0x00, RFREGOFFSETMASK, cali_info->dpk_tx_agc);
 	/* Baseband data rate setting */
 	odm_write_4byte(dm, 0xc20, 0x3c3c3c3c);
@@ -1959,7 +1959,7 @@ _dpk_do_auto_dpk_path_a(
 	odm_write_4byte(dm, 0xc48, 0x3c3c3c3c);
 	odm_write_4byte(dm, 0xc4c, 0x3c3c3c3c);
 
-	/* reg82c[31] = 1 --> ï¿½ï¿½ï¿½ï¿½ page C1 */
+	/* reg82c[31] = 1 --> ¤Á¨ì page C1 */
 	odm_write_4byte(dm, 0x82c, 0x802083dd);
 
 	/* DPK setting */
@@ -1974,28 +1974,28 @@ _dpk_do_auto_dpk_path_a(
 		/* r_agc */
 		odm_write_4byte(dm, 0xcbc, 0x00009dbf);
 
-	/* ï¿½`ï¿½Npage c1ï¿½ï¿½c90ï¿½bDPKï¿½Lï¿½{ï¿½ï¿½ï¿½dï¿½Uï¿½ï¿½ï¿½ï¿½Qï¿½ï¿½Lthread or processï¿½ï¿½gï¿½ï¿½page cï¿½ï¿½c90ï¿½ï¿½ */
+	/* ª`·Npage c1ªºc90¦bDPK¹Lµ{¤¤¤d¸U¤£¯à³Q¨ä¥Lthread or process§ï¼g¦¨page cªºc90­È */
 	odm_write_4byte(dm, 0xc90, 0x0101f018); /* TODO: 0xC90(rA_LSSIWrite_Jaguar) can not be overwritten. */
 
 	/* one shot */
 	odm_write_4byte(dm, 0xcc8, 0xc00c5599);
 	odm_write_4byte(dm, 0xcc8, 0x400c5599);
-	/* delay 50 ms,ï¿½ï¿½ delay ï¿½É¶ï¿½ï¿½ï¿½ï¿½@ï¿½I, ï¿½Tï¿½w PA Scan function ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+	/* delay 50 ms,Åý delay ®É¶¡ªø¤@ÂI, ½T©w PA Scan function ¦³°µ§¹ */
 	delay_ms(50);
 
-	/* reg82c[31] = 0 --> ï¿½ï¿½ï¿½ï¿½ page C */
+	/* reg82c[31] = 0 --> ¤Á¨ì page C */
 	odm_write_4byte(dm, 0x82c, 0x002083dd);
 	/* T-meter RFReg42[17] = 1 to enable read T-meter, [15:10] ' T-meter value */
 	odm_set_rf_reg(dm, RF_PATH_A, RF_0x42, BIT(17), 1);
-	cali_info->dpk_thermal[RF_PATH_A] = odm_get_rf_reg(dm, RF_PATH_A, RF_0x42, 0xFC00);					/* Åªï¿½X42[15:10] ï¿½È¨Ã¦sï¿½ï¿½ï¿½Ü¼ï¿½TMeter */
+	cali_info->dpk_thermal[RF_PATH_A] = odm_get_rf_reg(dm, RF_PATH_A, RF_0x42, 0xFC00);					/* Åª¥X42[15:10] ­È¨Ã¦s¨ìÅÜ¼ÆTMeter */
 	dbg_print("cali_info->dpk_thermal[RF_PATH_A] = 0x%X\n", cali_info->dpk_thermal[RF_PATH_A]);
 	odm_set_rf_reg(dm, RF_PATH_A, RF_0x00, RFREGOFFSETMASK, 0x33D8D);
 
-	/* reg82c[31] = 1 --> ï¿½ï¿½ï¿½ï¿½ page C1 */
+	/* reg82c[31] = 1 --> ¤Á¨ì page C1 */
 	odm_write_4byte(dm, 0x82c, 0x802083dd);
 	/* read back dp_fail report */
 	odm_write_4byte(dm, 0xcb8, 0x00000000);
-	/* dp_failï¿½oï¿½ï¿½bitï¿½bd00[6], ï¿½ï¿½ d00[6] = 1, ï¿½ï¿½ï¿½ï¿½calibrationï¿½ï¿½ï¿½ï¿½. */
+	/* dp_fail³o­Óbit¦bd00[6], ·í d00[6] = 1, ªí¥Ücalibration¥¢±Ñ. */
 	reg0xd00 = odm_read_4byte(dm, 0xd00);
 
 	if ((reg0xd00 & BIT(6)) == BIT(6)) {
@@ -2011,15 +2011,15 @@ _dpk_do_auto_dpk_path_a(
 	odm_write_4byte(dm, 0xc90, 0x0201f01f);
 	odm_write_4byte(dm, 0xcb8, 0x0c000000);
 
-	/* reg82c[31] = 1 --> ï¿½ï¿½ï¿½ï¿½ page C1 */
+	/* reg82c[31] = 1 --> ¤Á¨ì page C1 */
 	odm_write_4byte(dm, 0x82c, 0x002083dd);
 
-	/* ï¿½pï¿½ï¿½tmpGainLoss ï¿½Î¨ìªºfunction hex2dec() ï¿½Oï¿½N twos complementï¿½ï¿½ï¿½Qï¿½ï¿½ï¿½iï¿½ï¿½ï¿½à¦¨ï¿½Qï¿½iï¿½ï¿½, ï¿½Qï¿½ï¿½ï¿½iï¿½ìªºï¿½æ¦¡ï¿½ï¿½s11.9 */
-	/* ï¿½|ï¿½ï¿½1, d00[10:0] = h'3ff, ï¿½gï¿½L hex2dec(h'3ff) = 1023, */
-	/* ï¿½|ï¿½ï¿½2, d00[10:0] = h'400, ï¿½gï¿½L hex2dec(h'400) = -1024, */
-	/* ï¿½|ï¿½ï¿½3, d00[10:0] = h'0A9, ï¿½gï¿½L hex2dec(h'0A9) = 169, */
-	/* ï¿½|ï¿½ï¿½4, d00[10:0] = h'54c, ï¿½gï¿½L hex2dec(h'54c) = -692, */
-	/* ï¿½|ï¿½ï¿½4, d00[10:0] = h'7ff, ï¿½gï¿½L hex2dec(h'7ff) = -1, */
+	/* ­pºâtmpGainLoss ¥Î¨ìªºfunction hex2dec() ¬O±N twos complementªº¤Q¤»¶i¦ìÂà¦¨¤Q¶i¦ì, ¤Q¤»¶i¦ìªº®æ¦¡¬°s11.9 */
+	/* Á|¨Ò1, d00[10:0] = h'3ff, ¸g¹L hex2dec(h'3ff) = 1023, */
+	/* Á|¨Ò2, d00[10:0] = h'400, ¸g¹L hex2dec(h'400) = -1024, */
+	/* Á|¨Ò3, d00[10:0] = h'0A9, ¸g¹L hex2dec(h'0A9) = 169, */
+	/* Á|¨Ò4, d00[10:0] = h'54c, ¸g¹L hex2dec(h'54c) = -692, */
+	/* Á|¨Ò4, d00[10:0] = h'7ff, ¸g¹L hex2dec(h'7ff) = -1, */
 	tmp_lb_gain = _compute_loop_back_gain_path_a(dm);
 
 
@@ -2059,8 +2059,8 @@ _dpk_enable_dp_path_a(
 	/* [31] = 1 --> switch to page C1 */
 	odm_write_4byte(dm, 0x82c, 0x802083dd);
 
-	/* enable IQC matrix --> ï¿½]ï¿½ï¿½ BB ï¿½Hï¿½ï¿½ï¿½|ï¿½ï¿½ï¿½gï¿½L predistortion module, ï¿½~ï¿½gï¿½L IQC matrix ï¿½ï¿½ DAC ï¿½ï¿½ï¿½Xï¿½h */
-	/* ï¿½Ò¥Hï¿½nï¿½ï¿½ enable predistortion module {c90[7] = 1 (enable_predis) cc4[18] = 1 (ï¿½Tï¿½wï¿½ï¿½ IQK/DPK module ï¿½ï¿½clock), cc8[29] = 1 (ï¿½@ï¿½ï¿½IQK/DPK module ï¿½Ìªï¿½mux, ï¿½Tï¿½{ data path ï¿½ï¿½IQK/DPK)} */
+	/* enable IQC matrix --> ¦]¬° BB «H¸¹·|¥ý¸g¹L predistortion module, ¤~¸g¹L IQC matrix ¨ì DAC ¥´¥X¥h */
+	/* ©Ò¥H­n¥ý enable predistortion module {c90[7] = 1 (enable_predis) cc4[18] = 1 (½T©wÅý IQK/DPK module ¦³clock), cc8[29] = 1 (¤@­ÓIQK/DPK module ¸Ìªºmux, ½T»{ data path ¨«IQK/DPK)} */
 	odm_write_4byte(dm, 0xc90, 0x0000f098);
 	odm_write_4byte(dm, 0xc94, 0x776d9f84);
 	odm_write_4byte(dm, 0xcc8, 0x20000000);
@@ -2077,16 +2077,16 @@ _dpk_enable_dp_path_a(
 		odm_write_4byte(dm, 0xcc4, 0x08840000);
 
 		/* PWSF */
-		/* ï¿½gPWSF table in 1st SRAM for PA = 11 use */
+		/* ¼gPWSF table in 1st SRAM for PA = 11 use */
 		odm_write_4byte(dm, 0xc20, 0x00000800);
 
 		/* ******************************************************* */
-		/* 0xce4[0]ï¿½Owrite enableï¿½A0xce4[7:1]ï¿½Oaddressï¿½A0xce4[15:8]ï¿½M0xce4[23:16]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½TX indexï¿½A */
-		/* ï¿½Yï¿½ï¿½mï¿½ï¿½0(0xce4[7:1] = 0x0)ï¿½ï¿½ï¿½ï¿½0xce4[15:8]ï¿½ï¿½ï¿½ï¿½ï¿½ìªºTX RF index ï¿½O0x1f,ï¿½A */
-		/* 0xce4[23:16]ï¿½ï¿½ï¿½ï¿½ï¿½ìªºï¿½O0x1eï¿½Aï¿½Yï¿½ï¿½mï¿½ï¿½1(0xce4[7:1] = 0x1)ï¿½Aï¿½ï¿½ï¿½ï¿½0xce4 [15:8]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½0x1dï¿½A */
-		/* 0xce4[23:16]ï¿½ï¿½ï¿½ï¿½0x1cï¿½Aï¿½ï¿½Lï¿½Ì¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Cï¿½ï¿½dataï¿½ï¿½ì³£ï¿½Oï¿½Û®t1dBï¿½Cï¿½Ygainlossï¿½ï¿½ìªºRF TX index=0x18ï¿½A */
-		/* ï¿½hï¿½b0xce4 addressï¿½ï¿½ï¿½ï¿½ï¿½ï¿½0x18ï¿½ï¿½ï¿½aï¿½ï¿½nï¿½ï¿½0x40(ï¿½]ï¿½Nï¿½O0dB)ï¿½Aï¿½ï¿½Lï¿½hï¿½Ó¤Uï¿½ï¿½tableï¿½ï¿½ï¿½ï¿½ï¿½Ç¨Cï¿½ï¿½1dBï¿½Ì§Ç±Æ¦C */
-		/* ï¿½Nï¿½Ò¦ï¿½ï¿½ï¿½0xce4cï¿½ï¿½dataï¿½ï¿½ì³£ï¿½ï¿½Jï¿½Û¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡C */
+		/* 0xce4[0]¬Owrite enable¡A0xce4[7:1]¬Oaddress¡A0xce4[15:8]©M0xce4[23:16]¹ïÀ³¨ìTX index¡A */
+		/* ­Y¦ì¸m¬°0(0xce4[7:1] = 0x0)¦¹®É0xce4[15:8]¹ïÀ³¨ìªºTX RF index ¬O0x1f,¡A */
+		/* 0xce4[23:16]¹ïÀ³¨ìªº¬O0x1e¡A­Y¦ì¸m¬°1(0xce4[7:1] = 0x1)¡A¦¹®É0xce4 [15:8]¹ïÀ³¨ì0x1d¡A */
+		/* 0xce4[23:16]¹ïÀ³0x1c¡A¨ä¥L¨Ì¦¹Ãþ±À¡A¨C­ÓdataÄæ¦ì³£¬O¬Û®t1dB¡C­Ygainloss§ä¨ìªºRF TX index=0x18¡A */
+		/* «h¦b0xce4 address¹ïÀ³¨ì0x18ªº¦a¤è­n¶ñ0x40(¤]´N¬O0dB)¡A¨ä¥L«h·Ó¤U­±tableªº¶¶§Ç¨C®æ1dB¨Ì§Ç±Æ¦C */
+		/* ±N©Ò¦³ªº0xce4cªºdataÄæ¦ì³£¶ñ¤J¬Û¹ïÀ³ªº­È¡C */
 		/* ************************************************************* */
 
 		{
@@ -2241,12 +2241,12 @@ _compute_loop_back_gain_path_b(
 )
 {
 	/* compute loopback gain */
-	/* ï¿½pï¿½ï¿½tmp_lb_gain ï¿½Î¨ìªºfunction hex2dec() ï¿½Oï¿½N twos complementï¿½ï¿½ï¿½Qï¿½ï¿½ï¿½iï¿½ï¿½ï¿½à¦¨ï¿½Qï¿½iï¿½ï¿½, ï¿½Qï¿½ï¿½ï¿½iï¿½ìªºï¿½æ¦¡ï¿½ï¿½s11.10
-	* ï¿½|ï¿½ï¿½1, d00[10:0] = h'3ff, ï¿½gï¿½L hex2dec(h'3ff) = 1023,
-	* ï¿½|ï¿½ï¿½2, d00[10:0] = h'400, ï¿½gï¿½L hex2dec(h'400) = -1024,
-	* ï¿½|ï¿½ï¿½3, d00[10:0] = h'0A9, ï¿½gï¿½L hex2dec(h'0A9) = 169,
-	* ï¿½|ï¿½ï¿½4, d00[10:0] = h'54c, ï¿½gï¿½L hex2dec(h'54c) = -692,
-	* ï¿½|ï¿½ï¿½5, d00[10:0] = h'7ff, ï¿½gï¿½L hex2dec(h'7ff) = -1, */
+	/* ­pºâtmp_lb_gain ¥Î¨ìªºfunction hex2dec() ¬O±N twos complementªº¤Q¤»¶i¦ìÂà¦¨¤Q¶i¦ì, ¤Q¤»¶i¦ìªº®æ¦¡¬°s11.10
+	* Á|¨Ò1, d00[10:0] = h'3ff, ¸g¹L hex2dec(h'3ff) = 1023,
+	* Á|¨Ò2, d00[10:0] = h'400, ¸g¹L hex2dec(h'400) = -1024,
+	* Á|¨Ò3, d00[10:0] = h'0A9, ¸g¹L hex2dec(h'0A9) = 169,
+	* Á|¨Ò4, d00[10:0] = h'54c, ¸g¹L hex2dec(h'54c) = -692,
+	* Á|¨Ò5, d00[10:0] = h'7ff, ¸g¹L hex2dec(h'7ff) = -1, */
 	u32 reg0xd40_26_16 = odm_get_bb_reg(dm, R_0xd40, 0x7FF0000);
 	u32 reg0xd40_10_0  = odm_get_bb_reg(dm, R_0xd40, 0x7FF);
 
@@ -2276,16 +2276,16 @@ _fine_tune_loop_back_gain_path_b(
 		/* RF setting */
 		odm_set_rf_reg(dm, RF_PATH_B, RF_0x00, RFREGOFFSETMASK, dpk_tx_agc);
 		odm_write_4byte(dm, 0x82c, 0x802083dd);
-		/* ï¿½`ï¿½Npage c1ï¿½ï¿½c90ï¿½bDPKï¿½Lï¿½{ï¿½ï¿½ï¿½dï¿½Uï¿½ï¿½ï¿½ï¿½Qï¿½ï¿½Lthread or processï¿½ï¿½gï¿½ï¿½page cï¿½ï¿½c90ï¿½ï¿½ */
+		/* ª`·Npage c1ªºc90¦bDPK¹Lµ{¤¤¤d¸U¤£¯à³Q¨ä¥Lthread or process§ï¼g¦¨page cªºc90­È */
 		odm_write_4byte(dm, 0xe90, 0x0101f018);
 
 		/* one shot */
 		odm_write_4byte(dm, 0xec8, 0x800c5599);
 		odm_write_4byte(dm, 0xec8, 0x000c5599);
-		/* delay 50 ms,ï¿½ï¿½ delay ï¿½É¶ï¿½ï¿½ï¿½ï¿½@ï¿½I, ï¿½Tï¿½w PA Scan function ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+		/* delay 50 ms,Åý delay ®É¶¡ªø¤@ÂI, ½T©w PA Scan function ¦³°µ§¹ */
 		delay_ms(50);
 
-		/* reg82c[31] = 0 --> ï¿½ï¿½ï¿½ï¿½ page C */
+		/* reg82c[31] = 0 --> ¤Á¨ì page C */
 		odm_write_4byte(dm, 0x82c, 0x002083dd);
 		odm_set_rf_reg(dm, RF_PATH_B, RF_0x00, RFREGOFFSETMASK, 0x33d8d);
 
@@ -2331,7 +2331,7 @@ _dpk_init_path_b(
 	/* TX pause */
 	odm_write_1byte(dm, 0x522, 0x7f);
 
-	/* reg82c[31] = b'0, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ page C */
+	/* reg82c[31] = b'0, ¤Á´«¨ì page C */
 	odm_write_4byte(dm, 0x82c, 0x002083dd);
 
 	/* AFE setting */
@@ -2339,7 +2339,7 @@ _dpk_init_path_b(
 	odm_write_4byte(dm, 0xe60, 0x77777777);
 	odm_write_4byte(dm, 0xe64, 0x77777777);
 
-	/* external TRSW ï¿½ï¿½ï¿½ï¿½ T */
+	/* external TRSW ¤Á¨ì T */
 	odm_write_4byte(dm, 0xeb0, 0x77777777);
 	odm_write_4byte(dm, 0xeb4, 0x01000077);
 
@@ -2355,7 +2355,7 @@ _dpk_init_path_b(
 	/* r_gothrough_iqkdpk */
 	odm_write_4byte(dm, 0xe94, 0x0100005D);
 
-	/* reg82c[31] = 1 --> ï¿½ï¿½ï¿½ï¿½ page C1 */
+	/* reg82c[31] = 1 --> ¤Á¨ì page C1 */
 	odm_write_4byte(dm, 0x82c, 0x802083dd);
 
 	/* IQK Amp off */
@@ -2389,7 +2389,7 @@ _dpk_init_path_b(
 	odm_write_4byte(dm, 0xe78, 0x00bb00be);
 	odm_write_4byte(dm, 0xe7c, 0x00b500b8);
 
-	/* reg82c[31] = b'0, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ page C */
+	/* reg82c[31] = b'0, ¤Á´«¨ì page C */
 	odm_write_4byte(dm, 0x82c, 0x002083dd);
 
 	cali_info->is_dpk_fail = false;
@@ -2416,27 +2416,27 @@ _dpk_adjust_rf_gain_path_b(
 	/* PGA gain: RF reg8f[14:13] */
 	odm_set_rf_reg(dm, RF_PATH_B, RF_0x8f, RFREGOFFSETMASK, 0x8a001);
 
-	/* reg82c[31] = 1 --> ï¿½ï¿½ï¿½ï¿½ page C1 */
+	/* reg82c[31] = 1 --> ¤Á¨ì page C1 */
 	odm_write_4byte(dm, 0x82c, 0x802083dd);
 
 	/* DPK setting */
 	odm_write_4byte(dm, 0xe94, 0xf76c9f84);
 	odm_write_4byte(dm, 0xec8, 0x000c5599);
 	odm_write_4byte(dm, 0xec4, 0x11838000);
-	odm_set_bb_reg(dm, R_0xed4, 0xFFF000, 0x100);  /* ï¿½Ncd4[23:12] ï¿½ï¦¨ h'100, ï¿½ä¥¦ï¿½ì¤¸ï¿½Ð«Oï¿½dï¿½ï¿½È¤ï¿½ï¿½nï¿½gï¿½ï¿½
-     * ï¿½`ï¿½Npage c1ï¿½ï¿½c90ï¿½bDPKï¿½Lï¿½{ï¿½ï¿½ï¿½dï¿½Uï¿½ï¿½ï¿½ï¿½Qï¿½ï¿½Lthread or processï¿½ï¿½gï¿½ï¿½page cï¿½ï¿½c90ï¿½ï¿½ */
+	odm_set_bb_reg(dm, R_0xed4, 0xFFF000, 0x100);  /* ±Ncd4[23:12] §ï¦¨ h'100, ¨ä¥¦¦ì¤¸½Ð«O¯d­ì­È¤£­n¼g¨ì
+     * ª`·Npage c1ªºc90¦bDPK¹Lµ{¤¤¤d¸U¤£¯à³Q¨ä¥Lthread or process§ï¼g¦¨page cªºc90­È */
 	odm_write_4byte(dm, 0xe90, 0x0101f018);
 
 	/* one shot */
 	odm_write_4byte(dm, 0xec8, 0x800c5599);
 	odm_write_4byte(dm, 0xec8, 0x000c5599);
-	/* delay 50 ms,ï¿½ï¿½ delay ï¿½É¶ï¿½ï¿½ï¿½ï¿½@ï¿½I, ï¿½Tï¿½w PA Scan function ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+	/* delay 50 ms,Åý delay ®É¶¡ªø¤@ÂI, ½T©w PA Scan function ¦³°µ§¹ */
 	delay_ms(50);
 
 	/* read back Loopback Gain */
 	odm_write_4byte(dm, 0xeb8, 0x09000000);
 
-	/* reg82c[31] = 0 --> ï¿½ï¿½ï¿½ï¿½ page C */
+	/* reg82c[31] = 0 --> ¤Á¨ì page C */
 	odm_write_4byte(dm, 0x82c, 0x002083dd);
 	odm_set_rf_reg(dm, RF_PATH_B, RF_0x00, RFREGOFFSETMASK, 0x33d8d);
 
@@ -2475,10 +2475,10 @@ _dpk_gain_loss_to_find_tx_agc_path_b(
 	/* RF setting */
 	odm_set_rf_reg(dm, RF_PATH_B, RF_0x00, RFREGOFFSETMASK, 0x50bfc);
 
-	/* reg82c[31] = 1 --> ï¿½ï¿½ï¿½ï¿½ page C1 */
+	/* reg82c[31] = 1 --> ¤Á¨ì page C1 */
 	odm_write_4byte(dm, 0x82c, 0x802083dd);
 
-	/* regc20[15:13] = dB sel, ï¿½iï¿½D Gain Loss function ï¿½hï¿½Mï¿½ï¿½ dB_sel ï¿½Ò³]ï¿½wï¿½ï¿½PA gain lossï¿½Ø¼Ð©Ò¹ï¿½ï¿½ï¿½ï¿½ï¿½ Tx AGC ï¿½ï¿½ï¿½ï¿½. */
+	/* regc20[15:13] = dB sel, §i¶D Gain Loss function ¥h´M§ä dB_sel ©Ò³]©wªºPA gain loss¥Ø¼Ð©Ò¹ïÀ³ªº Tx AGC ¬°¦ó. */
 	/* dB_sel = b'000 ' 1.0 dB PA gain loss */
 	/* dB_sel = b'001 ' 1.5 dB PA gain loss */
 	/* dB_sel = b'010 ' 2.0 dB PA gain loss */
@@ -2493,27 +2493,27 @@ _dpk_gain_loss_to_find_tx_agc_path_b(
 	odm_write_4byte(dm, 0xec8, 0x000c5599);
 	odm_write_4byte(dm, 0xec4, 0x148b8000);
 
-	/* ï¿½`ï¿½Npage c1ï¿½ï¿½c90ï¿½bDPKï¿½Lï¿½{ï¿½ï¿½ï¿½dï¿½Uï¿½ï¿½ï¿½ï¿½Qï¿½ï¿½Lthread or processï¿½ï¿½gï¿½ï¿½page cï¿½ï¿½c90ï¿½ï¿½ */
+	/* ª`·Npage c1ªºc90¦bDPK¹Lµ{¤¤¤d¸U¤£¯à³Q¨ä¥Lthread or process§ï¼g¦¨page cªºc90­È */
 	odm_write_4byte(dm, 0xe90, 0x0401f018);
 
 	/* one shot */
 	odm_write_4byte(dm, 0xec8, 0x800c5599);
 	odm_write_4byte(dm, 0xec8, 0x000c5599);
-	/* delay 50 ms,ï¿½ï¿½ delay ï¿½É¶ï¿½ï¿½ï¿½ï¿½@ï¿½I, ï¿½Tï¿½w PA Scan function ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+	/* delay 50 ms,Åý delay ®É¶¡ªø¤@ÂI, ½T©w PA Scan function ¦³°µ§¹ */
 	delay_ms(50);
 
 	/* read back Loopback Gain */
-	/* ï¿½iï¿½Hï¿½b d40[3:0] ï¿½ï¿½Åªï¿½^, dB_sel ï¿½ï¿½ï¿½Ò³]ï¿½wï¿½ï¿½ gain loss ï¿½|ï¿½ï¿½ï¿½bï¿½ï¿½ï¿½@ï¿½ï¿½ Tx AGC ï¿½]ï¿½w */
-	/* Åªï¿½^d00[3:0] = h'1 ' Tx AGC = h'13 */
-	/* Åªï¿½^d00[3:0] = h'2 ' Tx AGC = h'14 */
-	/* Åªï¿½^d00[3:0] = h'3 ' Tx AGC = h'15 */
-	/* Åªï¿½^d00[3:0] = h'4 ' Tx AGC = h'16 */
-	/* Åªï¿½^d00[3:0] = h'5 ' Tx AGC = h'17 */
-	/* Åªï¿½^d00[3:0] = h'6 ' Tx AGC = h'18 */
-	/* Åªï¿½^d00[3:0] = h'7 ' Tx AGC = h'19 */
-	/* Åªï¿½^d00[3:0] = h'8 ' Tx AGC = h'1a */
-	/* Åªï¿½^d00[3:0] = h'9 ' Tx AGC = h'1b */
-	/* Åªï¿½^d00[3:0] = h'a ' Tx AGC = h'1c */
+	/* ¥i¥H¦b d40[3:0] ¤¤Åª¦^, dB_sel ¤¤©Ò³]©wªº gain loss ·|¸¨¦b­þ¤@­Ó Tx AGC ³]©w */
+	/* Åª¦^d00[3:0] = h'1 ' Tx AGC = h'13 */
+	/* Åª¦^d00[3:0] = h'2 ' Tx AGC = h'14 */
+	/* Åª¦^d00[3:0] = h'3 ' Tx AGC = h'15 */
+	/* Åª¦^d00[3:0] = h'4 ' Tx AGC = h'16 */
+	/* Åª¦^d00[3:0] = h'5 ' Tx AGC = h'17 */
+	/* Åª¦^d00[3:0] = h'6 ' Tx AGC = h'18 */
+	/* Åª¦^d00[3:0] = h'7 ' Tx AGC = h'19 */
+	/* Åª¦^d00[3:0] = h'8 ' Tx AGC = h'1a */
+	/* Åª¦^d00[3:0] = h'9 ' Tx AGC = h'1b */
+	/* Åª¦^d00[3:0] = h'a ' Tx AGC = h'1c */
 	/*  */
 	reg0xd40 = odm_read_4byte(dm, 0xd40);
 	switch (odm_read_4byte(dm, 0xd40) & (BIT(3) | BIT(2) | BIT(1) | BIT(0))) {
@@ -2551,7 +2551,7 @@ _dpk_gain_loss_to_find_tx_agc_path_b(
 		cali_info->dpk_tx_agc = 0x50bf0 | 0xc;
 		break;
 	}
-	/* reg82c[31] = 0 --> ï¿½ï¿½ï¿½ï¿½ page C */
+	/* reg82c[31] = 0 --> ¤Á¨ì page C */
 	odm_write_4byte(dm, 0x82c, 0x002083dd);
 	odm_set_rf_reg(dm, RF_PATH_B, RF_0x00, RFREGOFFSETMASK, 0x33d8d);
 
@@ -2570,14 +2570,14 @@ _dpk_adjust_rf_gain_by_found_tx_agc_path_b
 
 	RF_DBG(dm, DBG_RF_IQK, "===> _DPK_AdjustRFGainByFoundTxAGC\n");
 
-	/* RF setting, ï¿½ï¿½ï¿½sï¿½]ï¿½wRF reg00, ï¿½|ï¿½Ò¥ï¿½DPK Phase 2ï¿½oï¿½ìªº d40[3:0] = 0x6 ' TX AGC= 0x18 ' RF reg00[4:0] = 0x18 */
+	/* RF setting, ­«·s³]©wRF reg00, Á|¨Ò¥ÎDPK Phase 2±o¨ìªº d40[3:0] = 0x6 ' TX AGC= 0x18 ' RF reg00[4:0] = 0x18 */
 	odm_set_rf_reg(dm, RF_PATH_B, RF_0x00, RFREGOFFSETMASK, cali_info->dpk_tx_agc);
 	/* Attn: A mode @ reg64[2:0], G mode @ reg56 */
 	odm_set_rf_reg(dm, RF_PATH_B, RF_0x64, RFREGOFFSETMASK, 0x19aac);
 	/* PGA gain: RF reg8f[14:13] */
 	odm_set_rf_reg(dm, RF_PATH_B, RF_0x8f, RFREGOFFSETMASK, 0x8a001);
 
-	/* reg82c[31] = 1 --> ï¿½ï¿½ï¿½ï¿½ page C1 */
+	/* reg82c[31] = 1 --> ¤Á¨ì page C1 */
 	odm_write_4byte(dm, 0x82c, 0x802083dd);
 
 	/* DPK setting */
@@ -2585,16 +2585,16 @@ _dpk_adjust_rf_gain_by_found_tx_agc_path_b
 	odm_write_4byte(dm, 0xec8, 0x000c5599);
 	odm_write_4byte(dm, 0xec4, 0x11838000);
 
-	/* ï¿½`ï¿½Npage c1ï¿½ï¿½c90ï¿½bDPKï¿½Lï¿½{ï¿½ï¿½ï¿½dï¿½Uï¿½ï¿½ï¿½ï¿½Qï¿½ï¿½Lthread or processï¿½ï¿½gï¿½ï¿½page cï¿½ï¿½c90ï¿½ï¿½ */
+	/* ª`·Npage c1ªºc90¦bDPK¹Lµ{¤¤¤d¸U¤£¯à³Q¨ä¥Lthread or process§ï¼g¦¨page cªºc90­È */
 	odm_write_4byte(dm, 0xe90, 0x0101f018);
 
 	/* one shot */
 	odm_write_4byte(dm, 0xec8, 0x800c5599);
 	odm_write_4byte(dm, 0xec8, 0x000c5599);
-	/* delay 50 ms,ï¿½ï¿½ delay ï¿½É¶ï¿½ï¿½ï¿½ï¿½@ï¿½I, ï¿½Tï¿½w PA Scan function ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+	/* delay 50 ms,Åý delay ®É¶¡ªø¤@ÂI, ½T©w PA Scan function ¦³°µ§¹ */
 	delay_ms(50);
 
-	/* reg82c[31] = 0 --> ï¿½ï¿½ï¿½ï¿½ page C */
+	/* reg82c[31] = 0 --> ¤Á¨ì page C */
 	odm_write_4byte(dm, 0x82c, 0x002083dd);
 	odm_set_rf_reg(dm, RF_PATH_B, RF_0x00, RFREGOFFSETMASK, 0x33d8d);
 
@@ -2630,9 +2630,9 @@ _dpk_do_auto_dpk_path_b(
 	RF_DBG(dm, DBG_RF_IQK, "===> _DPK_DoAutoDPK\n");
 
 
-	/* reg82c[31] = 0 --> ï¿½ï¿½ï¿½ï¿½ page C */
+	/* reg82c[31] = 0 --> ¤Á¨ì page C */
 	odm_write_4byte(dm, 0x82c, 0x002083dd);
-	/* RF setting, ï¿½ï¿½ï¿½BRF reg00, ï¿½P DPK Phase 3 ï¿½@ï¿½P */
+	/* RF setting, ¦¹³BRF reg00, »P DPK Phase 3 ¤@­P */
 	odm_set_rf_reg(dm, RF_PATH_B, RF_0x00, RFREGOFFSETMASK, cali_info->dpk_tx_agc);
 	/* Baseband data rate setting */
 	odm_write_4byte(dm, 0xe20, 0x3c3c3c3c);
@@ -2648,7 +2648,7 @@ _dpk_do_auto_dpk_path_b(
 	odm_write_4byte(dm, 0xe48, 0x3c3c3c3c);
 	odm_write_4byte(dm, 0xe4c, 0x3c3c3c3c);
 
-	/* reg82c[31] = 1 --> ï¿½ï¿½ï¿½ï¿½ page C1 */
+	/* reg82c[31] = 1 --> ¤Á¨ì page C1 */
 	odm_write_4byte(dm, 0x82c, 0x802083dd);
 
 	/* DPK setting */
@@ -2663,28 +2663,28 @@ _dpk_do_auto_dpk_path_b(
 		/* r_agc */
 		odm_write_4byte(dm, 0xebc, 0x00009dbf);
 
-	/* ï¿½`ï¿½Npage c1ï¿½ï¿½c90ï¿½bDPKï¿½Lï¿½{ï¿½ï¿½ï¿½dï¿½Uï¿½ï¿½ï¿½ï¿½Qï¿½ï¿½Lthread or processï¿½ï¿½gï¿½ï¿½page cï¿½ï¿½c90ï¿½ï¿½ */
+	/* ª`·Npage c1ªºc90¦bDPK¹Lµ{¤¤¤d¸U¤£¯à³Q¨ä¥Lthread or process§ï¼g¦¨page cªºc90­È */
 	odm_write_4byte(dm, 0xe90, 0x0101f018); /* TODO: 0xe90(rA_LSSIWrite_Jaguar) can not be overwritten. */
 
 	/* one shot */
 	odm_write_4byte(dm, 0xec8, 0xc00c5599);
 	odm_write_4byte(dm, 0xec8, 0x400c5599);
-	/* delay 50 ms,ï¿½ï¿½ delay ï¿½É¶ï¿½ï¿½ï¿½ï¿½@ï¿½I, ï¿½Tï¿½w PA Scan function ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+	/* delay 50 ms,Åý delay ®É¶¡ªø¤@ÂI, ½T©w PA Scan function ¦³°µ§¹ */
 	delay_ms(50);
 
-	/* reg82c[31] = 0 --> ï¿½ï¿½ï¿½ï¿½ page C */
+	/* reg82c[31] = 0 --> ¤Á¨ì page C */
 	odm_write_4byte(dm, 0x82c, 0x002083dd);
 	/* T-meter RFReg42[17] = 1 to enable read T-meter, [15:10] ' T-meter value */
 	odm_set_rf_reg(dm, RF_PATH_A, RF_0x42, BIT(17), 1);
-	cali_info->dpk_thermal[RF_PATH_B] = odm_get_rf_reg(dm, RF_PATH_A, RF_0x42, 0xFC00);					/* Åªï¿½X42[15:10] ï¿½È¨Ã¦sï¿½ï¿½ï¿½Ü¼ï¿½TMeter */
+	cali_info->dpk_thermal[RF_PATH_B] = odm_get_rf_reg(dm, RF_PATH_A, RF_0x42, 0xFC00);					/* Åª¥X42[15:10] ­È¨Ã¦s¨ìÅÜ¼ÆTMeter */
 	dbg_print("cali_info->dpk_thermal[RF_PATH_B] = 0x%X\n", cali_info->dpk_thermal[RF_PATH_B]);
 	odm_set_rf_reg(dm, RF_PATH_B, RF_0x00, RFREGOFFSETMASK, 0x33D8D);
 
-	/* reg82c[31] = 1 --> ï¿½ï¿½ï¿½ï¿½ page C1 */
+	/* reg82c[31] = 1 --> ¤Á¨ì page C1 */
 	odm_write_4byte(dm, 0x82c, 0x802083dd);
 	/* read back dp_fail report */
 	odm_write_4byte(dm, 0xeb8, 0x00000000);
-	/* dp_failï¿½oï¿½ï¿½bitï¿½bd40[6], ï¿½ï¿½ d40[6] = 1, ï¿½ï¿½ï¿½ï¿½calibrationï¿½ï¿½ï¿½ï¿½. */
+	/* dp_fail³o­Óbit¦bd40[6], ·í d40[6] = 1, ªí¥Ücalibration¥¢±Ñ. */
 	reg0xd40 = odm_read_4byte(dm, 0xd40);
 
 	if ((reg0xd40 & BIT(6)) == BIT(6)) {
@@ -2700,15 +2700,15 @@ _dpk_do_auto_dpk_path_b(
 	odm_write_4byte(dm, 0xe90, 0x0201f01f);
 	odm_write_4byte(dm, 0xeb8, 0x0c000000);
 
-	/* reg82c[31] = 1 --> ï¿½ï¿½ï¿½ï¿½ page C1 */
+	/* reg82c[31] = 1 --> ¤Á¨ì page C1 */
 	odm_write_4byte(dm, 0x82c, 0x002083dd);
 
-	/* ï¿½pï¿½ï¿½tmpGainLoss ï¿½Î¨ìªºfunction hex2dec() ï¿½Oï¿½N twos complementï¿½ï¿½ï¿½Qï¿½ï¿½ï¿½iï¿½ï¿½ï¿½à¦¨ï¿½Qï¿½iï¿½ï¿½, ï¿½Qï¿½ï¿½ï¿½iï¿½ìªºï¿½æ¦¡ï¿½ï¿½s11.9 */
-	/* ï¿½|ï¿½ï¿½1, d00[10:0] = h'3ff, ï¿½gï¿½L hex2dec(h'3ff) = 1023, */
-	/* ï¿½|ï¿½ï¿½2, d00[10:0] = h'400, ï¿½gï¿½L hex2dec(h'400) = -1024, */
-	/* ï¿½|ï¿½ï¿½3, d00[10:0] = h'0A9, ï¿½gï¿½L hex2dec(h'0A9) = 169, */
-	/* ï¿½|ï¿½ï¿½4, d00[10:0] = h'54c, ï¿½gï¿½L hex2dec(h'54c) = -692, */
-	/* ï¿½|ï¿½ï¿½4, d00[10:0] = h'7ff, ï¿½gï¿½L hex2dec(h'7ff) = -1, */
+	/* ­pºâtmpGainLoss ¥Î¨ìªºfunction hex2dec() ¬O±N twos complementªº¤Q¤»¶i¦ìÂà¦¨¤Q¶i¦ì, ¤Q¤»¶i¦ìªº®æ¦¡¬°s11.9 */
+	/* Á|¨Ò1, d00[10:0] = h'3ff, ¸g¹L hex2dec(h'3ff) = 1023, */
+	/* Á|¨Ò2, d00[10:0] = h'400, ¸g¹L hex2dec(h'400) = -1024, */
+	/* Á|¨Ò3, d00[10:0] = h'0A9, ¸g¹L hex2dec(h'0A9) = 169, */
+	/* Á|¨Ò4, d00[10:0] = h'54c, ¸g¹L hex2dec(h'54c) = -692, */
+	/* Á|¨Ò4, d00[10:0] = h'7ff, ¸g¹L hex2dec(h'7ff) = -1, */
 	tmp_lb_gain = _compute_loop_back_gain_path_b(dm);
 
 
@@ -2748,8 +2748,8 @@ _dpk_enable_dp_path_b(
 	/* [31] = 1 --> switch to page C1 */
 	odm_write_4byte(dm, 0x82c, 0x802083dd);
 
-	/* enable IQC matrix --> ï¿½]ï¿½ï¿½ BB ï¿½Hï¿½ï¿½ï¿½|ï¿½ï¿½ï¿½gï¿½L predistortion module, ï¿½~ï¿½gï¿½L IQC matrix ï¿½ï¿½ DAC ï¿½ï¿½ï¿½Xï¿½h */
-	/* ï¿½Ò¥Hï¿½nï¿½ï¿½ enable predistortion module {c90[7] = 1 (enable_predis) cc4[18] = 1 (ï¿½Tï¿½wï¿½ï¿½ IQK/DPK module ï¿½ï¿½clock), cc8[29] = 1 (ï¿½@ï¿½ï¿½IQK/DPK module ï¿½Ìªï¿½mux, ï¿½Tï¿½{ data path ï¿½ï¿½IQK/DPK)} */
+	/* enable IQC matrix --> ¦]¬° BB «H¸¹·|¥ý¸g¹L predistortion module, ¤~¸g¹L IQC matrix ¨ì DAC ¥´¥X¥h */
+	/* ©Ò¥H­n¥ý enable predistortion module {c90[7] = 1 (enable_predis) cc4[18] = 1 (½T©wÅý IQK/DPK module ¦³clock), cc8[29] = 1 (¤@­ÓIQK/DPK module ¸Ìªºmux, ½T»{ data path ¨«IQK/DPK)} */
 	odm_write_4byte(dm, 0xe90, 0x0000f098);
 	odm_write_4byte(dm, 0xe94, 0x776d9f84);
 	odm_write_4byte(dm, 0xec8, 0x20000000);
@@ -2766,16 +2766,16 @@ _dpk_enable_dp_path_b(
 		odm_write_4byte(dm, 0xec4, 0x08840000);
 
 		/* PWSF */
-		/* ï¿½gPWSF table in 1st SRAM for PA = 11 use */
+		/* ¼gPWSF table in 1st SRAM for PA = 11 use */
 		odm_write_4byte(dm, 0xe20, 0x00000800);
 
 		/* ******************************************************* */
-		/* 0xee4[0]ï¿½Owrite enableï¿½A0xee4[7:1]ï¿½Oaddressï¿½A0xee4[15:8]ï¿½M0xee4[23:16]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½TX indexï¿½A */
-		/* ï¿½Yï¿½ï¿½mï¿½ï¿½0(0xee4[7:1] = 0x0)ï¿½ï¿½ï¿½ï¿½0xee4[15:8]ï¿½ï¿½ï¿½ï¿½ï¿½ìªºTX RF index ï¿½O0x1f,ï¿½A */
-		/* 0xee4[23:16]ï¿½ï¿½ï¿½ï¿½ï¿½ìªºï¿½O0x1eï¿½Aï¿½Yï¿½ï¿½mï¿½ï¿½1(0xee4[7:1] = 0x1)ï¿½Aï¿½ï¿½ï¿½ï¿½0xee4 [15:8]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½0x1dï¿½A */
-		/* 0xee4[23:16]ï¿½ï¿½ï¿½ï¿½0x1cï¿½Aï¿½ï¿½Lï¿½Ì¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Cï¿½ï¿½dataï¿½ï¿½ì³£ï¿½Oï¿½Û®t1dBï¿½Cï¿½Ygainlossï¿½ï¿½ìªºRF TX index=0x18ï¿½A */
-		/* ï¿½hï¿½b0xee4 addressï¿½ï¿½ï¿½ï¿½ï¿½ï¿½0x18ï¿½ï¿½ï¿½aï¿½ï¿½nï¿½ï¿½0x40(ï¿½]ï¿½Nï¿½O0dB)ï¿½Aï¿½ï¿½Lï¿½hï¿½Ó¤Uï¿½ï¿½tableï¿½ï¿½ï¿½ï¿½ï¿½Ç¨Cï¿½ï¿½1dBï¿½Ì§Ç±Æ¦C */
-		/* ï¿½Nï¿½Ò¦ï¿½ï¿½ï¿½0xee4cï¿½ï¿½dataï¿½ï¿½ì³£ï¿½ï¿½Jï¿½Û¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡C */
+		/* 0xee4[0]¬Owrite enable¡A0xee4[7:1]¬Oaddress¡A0xee4[15:8]©M0xee4[23:16]¹ïÀ³¨ìTX index¡A */
+		/* ­Y¦ì¸m¬°0(0xee4[7:1] = 0x0)¦¹®É0xee4[15:8]¹ïÀ³¨ìªºTX RF index ¬O0x1f,¡A */
+		/* 0xee4[23:16]¹ïÀ³¨ìªº¬O0x1e¡A­Y¦ì¸m¬°1(0xee4[7:1] = 0x1)¡A¦¹®É0xee4 [15:8]¹ïÀ³¨ì0x1d¡A */
+		/* 0xee4[23:16]¹ïÀ³0x1c¡A¨ä¥L¨Ì¦¹Ãþ±À¡A¨C­ÓdataÄæ¦ì³£¬O¬Û®t1dB¡C­Ygainloss§ä¨ìªºRF TX index=0x18¡A */
+		/* «h¦b0xee4 address¹ïÀ³¨ì0x18ªº¦a¤è­n¶ñ0x40(¤]´N¬O0dB)¡A¨ä¥L«h·Ó¤U­±tableªº¶¶§Ç¨C®æ1dB¨Ì§Ç±Æ¦C */
+		/* ±N©Ò¦³ªº0xee4cªºdataÄæ¦ì³£¶ñ¤J¬Û¹ïÀ³ªº­È¡C */
 		/* ************************************************************* */
 
 		{

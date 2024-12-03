@@ -23,13 +23,7 @@
 
 /*	Commented by Albert 20101105
  *	Increase the scanning timeout because of increasing the SURVEY_TO value. */
-
-
-#ifdef PALTFORM_OS_WINCE
-#define	SCANQUEUE_LIFETIME 12000000 /* unit:us */
-#else
 #define	SCANQUEUE_LIFETIME 20000 /* 20sec, unit:msec */
-#endif
 
 #define WIFI_NULL_STATE					0x00000000
 #define WIFI_ASOC_STATE					0x00000001 /* Linked */
@@ -698,7 +692,7 @@ struct nb_rpt_hdr {
 	u8 phy_type;	
 };
 
-/*IEEE Std 80211v, Figure 7-95e2ï¿½XBSS Termination Duration subelement field format */
+/*IEEE Std 80211v, Figure 7-95e2¡XBSS Termination Duration subelement field format */
 struct btm_term_duration {
 	u8 id;
 	u8 len;
@@ -706,7 +700,7 @@ struct btm_term_duration {
 	u16 duration;
 };
 
-/*IEEE Std 80211v, Figure 7-101n8ï¿½XBSS Transition Management Request frame body format */
+/*IEEE Std 80211v, Figure 7-101n8¡XBSS Transition Management Request frame body format */
 struct btm_req_hdr {
 	u8 req_mode;
 	u16 disassoc_timer;
@@ -982,32 +976,6 @@ struct mlme_priv {
 	_workitem	Linkdown_workitem;
 #endif
 
-#ifdef CONFIG_INTEL_WIDI
-	int	widi_state;
-	int	listen_state;
-	_timer	listen_timer;
-	ATOMIC_T	rx_probe_rsp; /* 1:receive probe respone from RDS source. */
-	u8	*l2sdTaBuffer;
-	u8	channel_idx;
-	u8	group_cnt;	/* In WiDi 3.5, they specified another scan algo. for WFD/RDS co-existed */
-	u8	sa_ext[L2SDTA_SERVICE_VE_LEN];
-
-	u8	widi_enable;
-	/**
-	 * For WiDi 4; upper layer would set
-	 * p2p_primary_device_type_category_id
-	 * p2p_primary_device_type_sub_category_id
-	 * p2p_secondary_device_type_category_id
-	 * p2p_secondary_device_type_sub_category_id
-	 */
-	u16	p2p_pdt_cid;
-	u16	p2p_pdt_scid;
-	u8	num_p2p_sdt;
-	u16	p2p_sdt_cid[MAX_NUM_P2P_SDT];
-	u16	p2p_sdt_scid[MAX_NUM_P2P_SDT];
-	u8	p2p_reject_disable;	/* When starting NL80211 wpa_supplicant/hostapd, it will call netdev_close */
-							/* such that it will cause p2p disabled. Use this flag to reject. */
-#endif /* CONFIG_INTEL_WIDI */
 	systime lastscantime;
 #ifdef CONFIG_CONCURRENT_MODE
 	u8	scanning_via_buddy_intf;

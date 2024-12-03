@@ -36,11 +36,11 @@
 // Global var
 //============================================================
 
-static VOID
-dm_CheckProtection(
-	IN	PADAPTER	Adapter
-	)
-{
+//static VOID
+//dm_CheckProtection(
+//	IN	PADAPTER	Adapter
+//	)
+//{
 #if 0
 	PMGNT_INFO		pMgntInfo = &(Adapter->MgntInfo);
 	u1Byte			CurRate, RateThreshold;
@@ -58,7 +58,7 @@ dm_CheckProtection(
 		DbgPrint("Enable protect: %x\n", Adapter->TxStats.CurrentInitTxRate);
 	}
 #endif
-}
+//}
 
 #ifdef CONFIG_SUPPORT_HW_WPS_PBC
 static void dm_CheckPbcGPIO(_adapter *padapter)

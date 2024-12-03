@@ -100,15 +100,6 @@ u32    driver3 = 0;
 	} else
 		return FALSE;
 }
-static BOOLEAN
-CheckNegative(
-	struct dm_struct    *pDM_Odm,
-	const u32  Condition1,
-	const u32  Condition2
-)
-{
-	return TRUE;
-}
 
 /******************************************************************************
 *                           AGC_TAB.TXT

@@ -15,20 +15,13 @@
 #ifndef __HAL_DATA_H__
 #define __HAL_DATA_H__
 
-#if 1/* def  CONFIG_SINGLE_IMG */
+//#if 1/* def  CONFIG_SINGLE_IMG */
 
 #include "../hal/phydm/phydm_precomp.h"
 #ifdef CONFIG_BT_COEXIST
 	#include <hal_btcoex.h>
 #endif
 	#include <hal_btcoex_wifionly.h>
-
-#ifdef CONFIG_SDIO_HCI
-	#include <hal_sdio.h>
-#endif
-#ifdef CONFIG_GSPI_HCI
-	#include <hal_gspi.h>
-#endif
 
 #if defined(CONFIG_RTW_ACS) || defined(CONFIG_BACKGROUND_NOISE_MONITOR)
 #include "../hal/hal_dm_acs.h"
@@ -60,13 +53,6 @@ typedef enum _RT_REGULATOR_MODE {
 /*
  * Interface type.
  *   */
-typedef	enum _INTERFACE_SELECT_PCIE {
-	INTF_SEL0_SOLO_MINICARD			= 0,		/* WiFi solo-mCard */
-	INTF_SEL1_BT_COMBO_MINICARD		= 1,		/* WiFi+BT combo-mCard */
-	INTF_SEL2_PCIe						= 2,		/* PCIe Card */
-} INTERFACE_SELECT_PCIE, *PINTERFACE_SELECT_PCIE;
-
-
 typedef	enum _INTERFACE_SELECT_USB {
 	INTF_SEL0_USB 				= 0,		/* USB */
 	INTF_SEL1_USB_High_Power  	= 1,		/* USB with high power PA */
@@ -110,44 +96,10 @@ typedef enum _RX_AGG_MODE {
 #endif /* RTW_RX_AGGREGATION */
 
 /* E-Fuse */
-#ifdef CONFIG_RTL8188E
+#if defined(CONFIG_RTL8812A) || defined(CONFIG_RTL8821A)
 	#define EFUSE_MAP_SIZE	512
-#endif
-#if defined(CONFIG_RTL8812A) || defined(CONFIG_RTL8821A) || defined(CONFIG_RTL8814A)
-	#define EFUSE_MAP_SIZE	512
-#endif
-#ifdef CONFIG_RTL8192E
-	#define EFUSE_MAP_SIZE	512
-#endif
-#ifdef CONFIG_RTL8723B
-	#define EFUSE_MAP_SIZE	512
-#endif
-#ifdef CONFIG_RTL8814A
-	#define EFUSE_MAP_SIZE	512
-#endif
-#ifdef CONFIG_RTL8703B
-	#define EFUSE_MAP_SIZE	512
-#endif
-#ifdef CONFIG_RTL8723D
-	#define EFUSE_MAP_SIZE	512
-#endif
-#ifdef CONFIG_RTL8188F
-	#define EFUSE_MAP_SIZE	512
-#endif
-#ifdef CONFIG_RTL8188GTV
-	#define EFUSE_MAP_SIZE	512
-#endif
-#ifdef CONFIG_RTL8710B
-	#define EFUSE_MAP_SIZE	512
-#endif
-#ifdef CONFIG_RTL8192F
-	#define EFUSE_MAP_SIZE	512
-#endif
-
-#if defined(CONFIG_RTL8814A) || defined(CONFIG_RTL8822B) || defined(CONFIG_RTL8821C)
+#if defined(CONFIG_RTL8814A)
 	#define EFUSE_MAX_SIZE	1024
-#elif defined(CONFIG_RTL8188E) || defined(CONFIG_RTL8188F) || defined(CONFIG_RTL8188GTV) || defined(CONFIG_RTL8703B) || defined(CONFIG_RTL8710B)
-	#define EFUSE_MAX_SIZE	256
 #else
 	#define EFUSE_MAX_SIZE	512
 #endif
@@ -165,16 +117,8 @@ typedef enum _RX_AGG_MODE {
 #define Mac_DropPacket		0xA0000000
 
 #ifdef CONFIG_RF_POWER_TRIM
-#if defined(CONFIG_RTL8723B)
-	#define REG_RF_BB_GAIN_OFFSET	0x7f
-	#define RF_GAIN_OFFSET_MASK		0xfffff
-#elif defined(CONFIG_RTL8188E)
-	#define REG_RF_BB_GAIN_OFFSET	0x55
-	#define RF_GAIN_OFFSET_MASK		0xfffff
-#else
-	#define REG_RF_BB_GAIN_OFFSET	0x55
-	#define RF_GAIN_OFFSET_MASK		0xfffff
-#endif /* CONFIG_RTL8723B */
+#define REG_RF_BB_GAIN_OFFSET	0x55
+#define RF_GAIN_OFFSET_MASK		0xfffff
 #endif /*CONFIG_RF_POWER_TRIM*/
 
 /* For store initial value of BB register */
@@ -417,10 +361,6 @@ typedef struct hal_com_data {
 	u16	EEPROMPID;
 	u16	EEPROMSDID;
 #endif
-#ifdef CONFIG_PCI_HCI
-	u16	EEPROMDID;
-	u16	EEPROMSMID;
-#endif
 
 	u8	EEPROMCustomerID;
 	u8	EEPROMSubCustomerID;
@@ -444,13 +384,6 @@ typedef struct hal_com_data {
 	struct kfree_data_t kfree_data;
 #endif /*CONFIG_RF_POWER_TRIM*/
 
-#if defined(CONFIG_RTL8723B) || defined(CONFIG_RTL8703B) || \
-	defined(CONFIG_RTL8723D) || \
-	defined(CONFIG_RTL8192F)
-
-	u8	adjuseVoltageVal;
-	u8	need_restore;
-#endif
 	u8	EfuseUsedPercentage;
 	u16	EfuseUsedBytes;
 	/*u8		EfuseMap[2][HWSET_MAX_SIZE_JAGUAR];*/
@@ -548,8 +481,6 @@ typedef struct hal_com_data {
 	u8			bScanInProcess;
 	/******** PHY DM & DM Section **********/
 
-
-
 	/* 2010/08/09 MH Add CU power down mode. */
 	BOOLEAN		pwrdown;
 
@@ -585,66 +516,6 @@ typedef struct hal_com_data {
 	u8 rxagg_dma_timeout;
 #endif /* RTW_RX_AGGREGATION */
 
-#if defined(CONFIG_SDIO_HCI) || defined(CONFIG_GSPI_HCI)
-	/*  */
-	/* For SDIO Interface HAL related */
-	/*  */
-
-	/*  */
-	/* SDIO ISR Related */
-	/*
-	*	u32			IntrMask[1];
-	*	u32			IntrMaskToSet[1];
-	*	LOG_INTERRUPT		InterruptLog; */
-	u32			sdio_himr;
-	u32			sdio_hisr;
-#ifndef RTW_HALMAC
-	/*  */
-	/* SDIO Tx FIFO related. */
-	/*  */
-	/* HIQ, MID, LOW, PUB free pages; padapter->xmitpriv.free_txpg */
-#ifdef CONFIG_RTL8192F
-	u16			SdioTxFIFOFreePage[SDIO_TX_FREE_PG_QUEUE];
-#else
-	u8			SdioTxFIFOFreePage[SDIO_TX_FREE_PG_QUEUE];
-#endif/*CONFIG_RTL8192F*/
-	_lock		SdioTxFIFOFreePageLock;
-	u8			SdioTxOQTMaxFreeSpace;
-	u8			SdioTxOQTFreeSpace;
-#else /* RTW_HALMAC */
-	u16			SdioTxOQTFreeSpace;
-#endif /* RTW_HALMAC */
-
-	/*  */
-	/* SDIO Rx FIFO related. */
-	/*  */
-	u8			SdioRxFIFOCnt;
-	u16			SdioRxFIFOSize;
-
-#ifndef RTW_HALMAC
-	u32			sdio_tx_max_len[SDIO_MAX_TX_QUEUE];/* H, N, L, used for sdio tx aggregation max length per queue */
-#else
-#ifdef CONFIG_RTL8821C
-	u16			tx_high_page;
-	u16			tx_low_page;
-	u16			tx_normal_page;
-	u16			tx_extra_page;
-	u16			tx_pub_page;
-	u8			max_oqt_size;
-	#ifdef XMIT_BUF_SIZE
-	u32			max_xmit_size_vovi;
-	u32			max_xmit_size_bebk;
-	#endif /*XMIT_BUF_SIZE*/
-	u16			max_xmit_page;
-	u16			max_xmit_page_vo;
-	u16			max_xmit_page_vi;
-	u16			max_xmit_page_be;
-	u16			max_xmit_page_bk;
-
-#endif /*#ifdef CONFIG_RTL8821C*/
-#endif /* !RTW_HALMAC */
-#endif /* CONFIG_SDIO_HCI */
-
 #ifdef CONFIG_USB_HCI
 
 	/* 2010/12/10 MH Add for USB aggreation mode dynamic shceme. */
@@ -671,36 +542,6 @@ typedef struct hal_com_data {
 #endif/* CONFIG_USB_RX_AGGREGATION */
 #endif /* CONFIG_USB_HCI */
 
-
-#ifdef CONFIG_PCI_HCI
-	/*  */
-	/* EEPROM setting. */
-	/*  */
-	u32			TransmitConfig;
-	u32			IntrMaskToSet[2];
-	u32			IntArray[4];
-	u32			IntrMask[4];
-	u32			SysIntArray[1];
-	u32			SysIntrMask[1];
-	u32			IntrMaskReg[2];
-	u32			IntrMaskDefault[4];
-
-	BOOLEAN		bL1OffSupport;
-	BOOLEAN	bSupportBackDoor;
-	u32			pci_backdoor_ctrl;
-
-	u8			bDefaultAntenna;
-
-	u8			bInterruptMigration;
-	u8			bDisableTxInt;
-
-	u16			RxTag;
-#ifdef CONFIG_PCI_DYNAMIC_ASPM
-	BOOLEAN		bAspmL1LastIdle;
-#endif
-#endif /* CONFIG_PCI_HCI */
-
-
 #ifdef DBG_CONFIG_ERROR_DETECT
 	struct sreset_priv srestpriv;
 #endif /* #ifdef DBG_CONFIG_ERROR_DETECT */
@@ -709,15 +550,6 @@ typedef struct hal_com_data {
 	/* For bluetooth co-existance */
 	BT_COEXIST		bt_coexist;
 #endif /* CONFIG_BT_COEXIST */
-
-#if defined(CONFIG_RTL8723B) || defined(CONFIG_RTL8703B) \
-	|| defined(CONFIG_RTL8188F) || defined(CONFIG_RTL8188GTV) || defined(CONFIG_RTL8723D)|| defined(CONFIG_RTL8192F)
-#ifndef CONFIG_PCI_HCI	/* mutual exclusive with PCI -- so they're SDIO and GSPI */
-	/* Interrupt relatd register information. */
-	u32			SysIntrStatus;
-	u32			SysIntrMask;
-#endif
-#endif /*endif CONFIG_RTL8723B	*/
 
 #ifdef CONFIG_LOAD_PHY_PARA_FROM_FILE
 	char	para_file_buf[MAX_PARA_FILE_BUF_LEN];
@@ -754,9 +586,6 @@ typedef struct hal_com_data {
 	BOOLEAN				bCCKinCH14;
 	BB_INIT_REGISTER	RegForRecover[5];
 
-#if defined(CONFIG_PCI_HCI) && defined(RTL8814AE_SW_BCN)
-	BOOLEAN bCorrectBCN;
-#endif
 	u32 RxGainOffset[4]; /*{2G, 5G_Low, 5G_Middle, G_High}*/
 	u8 BackUp_IG_REG_4_Chnl_Section[4]; /*{A,B,C,D}*/
 
@@ -1050,18 +879,54 @@ int rtw_halmac_deinit_adapter(struct dvobj_priv *);
 #define REG_APK	rAPK
 #define REG_ANTSEL_SW_JAGUAR	r_ANTSEL_SW_Jaguar
 
-
-
 #define rf_welut_jaguar	RF_WeLut_Jaguar
 #define rf_mode_table_addr	RF_ModeTableAddr
 #define rf_mode_table_data0	RF_ModeTableData0
 #define rf_mode_table_data1	RF_ModeTableData1
 
-
-
-
-
-
 #define RX_SMOOTH_FACTOR	Rx_Smooth_Factor
+
+extern unsigned char	RTW_WPA_OUI[];
+extern unsigned char	WMM_OUI[];
+extern unsigned char	WPS_OUI[];
+extern unsigned char	P2P_OUI[];
+extern unsigned char	WFD_OUI[];
+
+int pm_netdev_open(struct net_device *pnetdev,u8 bnormal);
+void *scdb_findEntry(_adapter *priv, unsigned char *macAddr, unsigned char *ipAddr);
+void dhcp_flag_bcast(_adapter *priv, struct sk_buff *skb);
+int nat25_handle_frame(_adapter *priv, struct sk_buff *skb);
+int nat25_db_handle(_adapter *priv, struct sk_buff *skb, int method);
+void nat25_db_expire(_adapter *priv);
+extern unsigned char REALTEK_96B_IE[];
+int rtw_change_ifname(_adapter *padapter, const char *ifname);
+void indicate_wx_scan_complete_event(_adapter *padapter);
+u8 rtw_do_join(_adapter *padapter);
+int _netdev_open(struct net_device *pnetdev);
+int netdev_open (struct net_device *pnetdev);
+u8 key_2char2num(u8 hch, u8 lch);
+u8 key_2char2num(u8 hch, u8 lch);
+void macstr2num(u8 *dst, u8 *src);
+#ifdef CONFIG_AUTOSUSPEND
+void autosuspend_enter(_adapter* padapter);
+#endif
+
+/*
+#ifdef CONFIG_RESUME_IN_WORKQUEUE || CONFIG_HAS_EARLYSUSPEND
+int rtw_resume_process(_adapter *padapter);
+#endif
+#ifdef CONFIG_ANDROID_POWER
+#if defined(CONFIG_USB_HCI)
+int rtw_resume_process(PADAPTER padapter);
+#endif
+#ifdef CONFIG_AUTOSUSPEND
+void autosuspend_enter(_adapter* padapter);
+int autoresume_enter(_adapter* padapter);
+#endif
+#ifdef SUPPORT_HW_RFOFF_DETECTED
+int rtw_hw_suspend(_adapter *padapter );
+int rtw_hw_resume(_adapter *padapter);
+#endif
+*/
 
 #endif /* __HAL_DATA_H__ */
