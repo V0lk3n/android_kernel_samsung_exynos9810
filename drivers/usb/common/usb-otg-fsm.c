@@ -37,7 +37,6 @@ static int otg_set_protocol(struct otg_fsm *fsm, int protocol)
 	int ret = 0;
 
 	if (fsm->protocol != protocol) {
-		VDBG("Changing role fsm->protocol= %d; new protocol= %d\n",
 			fsm->protocol, protocol);
 		/* stop old protocol */
 		if (fsm->protocol == PROTO_HOST)
@@ -209,7 +208,6 @@ static int otg_set_state(struct otg_fsm *fsm, enum usb_otg_state new_state)
 {
 	if (fsm->otg->state == new_state)
 		return 0;
-	VDBG("Set state: %s\n", usb_otg_state_string(new_state));
 	otg_leave_state(fsm, fsm->otg->state);
 	switch (new_state) {
 	case OTG_STATE_B_IDLE:
@@ -339,7 +337,6 @@ int otg_statemachine(struct otg_fsm *fsm)
 
 	switch (state) {
 	case OTG_STATE_UNDEFINED:
-		VDBG("fsm->id = %d\n", fsm->id);
 		if (fsm->id)
 			otg_set_state(fsm, OTG_STATE_B_IDLE);
 		else
@@ -447,7 +444,6 @@ int otg_statemachine(struct otg_fsm *fsm)
 	}
 	mutex_unlock(&fsm->lock);
 
-	VDBG("quit statemachine, changed = %d\n", fsm->state_changed);
 	return fsm->state_changed;
 }
 EXPORT_SYMBOL_GPL(otg_statemachine);

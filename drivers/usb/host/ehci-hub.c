@@ -1237,19 +1237,12 @@ int ehci_hub_control(
 					wIndex + 1);
 				temp |= PORT_OWNER;
 			} else {
-				ehci_vdbg (ehci, "port %d reset\n", wIndex + 1);
 
 				/* W/A for Synopsys HC HSIC port.
 				 * Disable HSIC port to prevent
 				 * the port reset failure.
 				 */
 				if (ehci->has_synopsys_hsic_bug) {
-					if ((wIndex + 1) == ehci->hsic_ports) {
-						ehci_writel(ehci,
-							temp & ~PORT_PE,
-							status_reg);
-					}
-				}
 
 				temp |= PORT_RESET;
 				temp &= ~PORT_PE;
