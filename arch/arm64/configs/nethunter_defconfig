@@ -1157,7 +1157,7 @@ CONFIG_CAN_LEDS=y
 # CONFIG_CAN_IFI_CANFD is not set
 # CONFIG_CAN_M_CAN is not set
 # CONFIG_CAN_SJA1000 is not set
-CONFIG_CAN_SOFTING=y
+# CONFIG_CAN_SOFTING is not set
 
 #
 # CAN SPI interfaces
