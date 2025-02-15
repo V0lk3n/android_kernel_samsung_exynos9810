@@ -1154,6 +1154,7 @@ CONFIG_CAN_LEDS=y
 # CONFIG_CAN_XILINXCAN is not set
 # CONFIG_CAN_C_CAN is not set
 # CONFIG_CAN_CC770 is not set
+CONFIG_ELM327=m
 # CONFIG_CAN_IFI_CANFD is not set
 # CONFIG_CAN_M_CAN is not set
 # CONFIG_CAN_SJA1000 is not set
