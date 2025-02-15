@@ -4,3 +4,7 @@
 [submodule "drivers/net/wireless/realtek/rtl8812au"]
 	path = drivers/net/wireless/realtek/rtl8812au
 	url = https://github.com/aircrack-ng/rtl8812au
+[submodule "drivers/net/can/elmcan"]
+	path = drivers/net/can/elmcan
+	url = https://github.com/V0lk3n/elmcan
+	branch = linux-pre-4.11
