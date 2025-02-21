@@ -8,3 +8,6 @@
 	path = drivers/net/can/elmcan
 	url = https://github.com/V0lk3n/elmcan
 	branch = linux-pre-4.11
+[submodule "kali-nethunter-kernel-builder"]
+	path = kali-nethunter-kernel-builder
+	url = https://gitlab.com/kalilinux/nethunter/build-scripts/kali-nethunter-kernel-builder
