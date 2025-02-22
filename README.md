@@ -1,3 +1,5 @@
+![NetHunter_banner](https://github.com/user-attachments/assets/715a09a6-2b10-4553-80f9-4aee1c4a0ad2)
+
 # NetHunter Kernel - Samsung Galaxy S9 Exynos9810 Starlte
 
 Official lineage documentation has been moved to <a href="Documentation/README">Documentation</a>
