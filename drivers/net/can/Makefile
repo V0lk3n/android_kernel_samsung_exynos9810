@@ -10,6 +10,7 @@ can-dev-y			:= dev.o
 
 can-dev-$(CONFIG_CAN_LEDS)	+= led.o
 
+obj-y				+= can-isotp/
 obj-y                           += elmcan/
 obj-y				+= rcar/
 obj-y				+= spi/
